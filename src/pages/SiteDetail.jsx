@@ -67,36 +67,29 @@ const unitColumns = [
   }
 ];
 
-const historyColumns = [
-  {
-    accessorKey: 'date',
-    header: 'Date',
-    meta: { label: 'Date' }
-  },
-  {
-    accessorKey: 'energyMWh',
-    header: 'Energy (MWh)',
-    meta: { label: 'Energy (MWh)' },
-    cell: ({ row }) => row.original.energyMWh.toFixed(1)
-  },
-  {
-    accessorKey: 'peakPowerMw',
-    header: 'Peak (MW)',
-    meta: { label: 'Peak (MW)' },
-    cell: ({ row }) => row.original.peakPowerMw?.toFixed(1) ?? '-'
-  },
-  {
-    accessorKey: 'availabilityPct',
-    header: 'Availability %',
-    meta: { label: 'Availability %' },
-    cell: ({ row }) => row.original.availabilityPct.toFixed(1)
-  },
-  {
-    accessorKey: 'irradianceWhm2',
-    header: 'Irradiance (Wh/m2)',
-    meta: { label: 'Irradiance (Wh/m2)' }
-  }
+const defaultHistoryFields = [
+  { key: 'date', label: 'Date', canHide: false, precision: 0 },
+  { key: 'time', label: 'Time', canHide: true, precision: 0 },
+  { key: 'energyMWh', label: 'Energy (MWh)', precision: 2 },
+  { key: 'peakPowerMw', label: 'Peak (MW)', precision: 2 },
+  { key: 'availabilityPct', label: 'Availability %', precision: 1 },
+  { key: 'performanceRatioPct', label: 'PR (%)', precision: 1 },
+  { key: 'irradianceWhm2', label: 'Irradiance (Wh/m²)', precision: 0 }
 ];
+
+const formatHistoryValue = (value, field) => {
+  if (value === undefined || value === null || value === '') {
+    return '-';
+  }
+  if (typeof value === 'number') {
+    const precision = field?.precision ?? (Math.abs(value) >= 100 ? 0 : 2);
+    return value.toLocaleString(undefined, {
+      maximumFractionDigits: precision,
+      minimumFractionDigits: field?.fixed ? precision : undefined
+    });
+  }
+  return value;
+};
 
 const createAlarmColumns = (canModify, onAcknowledge, onResolve) => [
   {
@@ -232,6 +225,19 @@ const SiteDetail = () => {
     if (!canModifyAlarms) return;
     resolveAlarm(site.id, alarmId, new Date().toISOString());
   };
+
+  const historyFields = site.historyFields ?? defaultHistoryFields;
+  const historyColumns = useMemo(
+    () =>
+      historyFields.map((field) => ({
+        accessorKey: field.key,
+        header: field.label,
+        meta: { label: field.label },
+        enableHiding: field.canHide !== false,
+        cell: ({ row }) => formatHistoryValue(row.original[field.key], field)
+      })),
+    [historyFields]
+  );
 
   const alarmColumns = createAlarmColumns(canModifyAlarms, handleAcknowledge, handleResolve);
 

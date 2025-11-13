@@ -1,0 +1,156 @@
+[
+  {
+    "device_key": "44-B7-D0-9E-A7-74/1",
+    "device_phone_number": "",
+    "name": "1 Sungrow320kW",
+    "unit_key": "0351c368cf",
+    "site_key": "6b809f8b8b",
+    "site_name": "JOD01",
+    "status": "Active",
+    "last_event_ts": 1762950000,
+    "unit_category_name": "Inverter"
+  },
+  {
+    "device_key": null,
+    "device_phone_number": "",
+    "name": "10 Schi EM6436H",
+    "unit_key": "09ac52c8d7",
+    "site_key": "6b809f8b8b",
+    "site_name": "JOD01",
+    "status": "Active",
+    "last_event_ts": 1762950000,
+    "unit_category_name": "Meter"
+  },
+  {
+    "device_key": "9C-95-6E-7B-D2-0E/11",
+    "device_phone_number": "",
+    "name": "11 Main",
+    "unit_key": "c99266d55d",
+    "site_key": "6b809f8b8b",
+    "site_name": "JOD01",
+    "status": "Active",
+    "last_event_ts": 1762949400,
+    "unit_category_name": "Meter"
+  },
+  {
+    "device_key": "9C-95-6E-7B-D2-0E/12",
+    "device_phone_number": "",
+    "name": "12 Check",
+    "unit_key": "d5998bc4e6",
+    "site_key": "6b809f8b8b",
+    "site_name": "JOD01",
+    "status": "Active",
+    "last_event_ts": 1762949400,
+    "unit_category_name": "Meter"
+  },
+  {
+    "device_key": "9C-95-6E-7B-D2-0E/13",
+    "device_phone_number": "",
+    "name": "13 Standby",
+    "unit_key": "9b8d6850f5",
+    "site_key": "6b809f8b8b",
+    "site_name": "JOD01",
+    "status": "Active",
+    "last_event_ts": 1762949400,
+    "unit_category_name": "Meter"
+  },
+  {
+    "device_key": "44-B7-D0-9E-A7-74/2",
+    "device_phone_number": "",
+    "name": "2  Sungrow320kW",
+    "unit_key": "c5708cc14d",
+    "site_key": "6b809f8b8b",
+    "site_name": "JOD01",
+    "status": "Active",
+    "last_event_ts": 1762950000,
+    "unit_category_name": "Inverter"
+  },
+  {
+    "device_key": "44-B7-D0-9E-A7-74/3",
+    "device_phone_number": "",
+    "name": "3 Sungrow320kW",
+    "unit_key": "6f8cce8c22",
+    "site_key": "6b809f8b8b",
+    "site_name": "JOD01",
+    "status": "Active",
+    "last_event_ts": 1762950000,
+    "unit_category_name": "Inverter"
+  },
+  {
+    "device_key": "44-B7-D0-9E-A7-74/4",
+    "device_phone_number": "",
+    "name": "4 Sungrow320kW",
+    "unit_key": "cda1e7be63",
+    "site_key": "6b809f8b8b",
+    "site_name": "JOD01",
+    "status": "Active",
+    "last_event_ts": 1762950000,
+    "unit_category_name": "Inverter"
+  },
+  {
+    "device_key": "44-B7-D0-9E-A7-74/5",
+    "device_phone_number": "",
+    "name": "5 Sungrow320kW",
+    "unit_key": "0dbe3a9b35",
+    "site_key": "6b809f8b8b",
+    "site_name": "JOD01",
+    "status": "Active",
+    "last_event_ts": 1762950000,
+    "unit_category_name": "Inverter"
+  },
+  {
+    "device_key": "44-B7-D0-9E-A7-74/6",
+    "device_phone_number": "",
+    "name": "6 Sungrow320kW",
+    "unit_key": "01bbac1c34",
+    "site_key": "6b809f8b8b",
+    "site_name": "JOD01",
+    "status": "Active",
+    "last_event_ts": 1762950000,
+    "unit_category_name": "Inverter"
+  },
+  {
+    "device_key": "44-B7-D0-9E-A7-74/7",
+    "device_phone_number": "",
+    "name": "7 Sungrow320kW",
+    "unit_key": "3b0bb2a819",
+    "site_key": "6b809f8b8b",
+    "site_name": "JOD01",
+    "status": "Active",
+    "last_event_ts": 1762950000,
+    "unit_category_name": "Inverter"
+  },
+  {
+    "device_key": "44-B7-D0-9E-A7-74/8",
+    "device_phone_number": "",
+    "name": "8 Sungrow320kW",
+    "unit_key": "d94c85599c",
+    "site_key": "6b809f8b8b",
+    "site_name": "JOD01",
+    "status": "Active",
+    "last_event_ts": 1762950000,
+    "unit_category_name": "Inverter"
+  },
+  {
+    "device_key": "44-B7-D0-9E-A7-74/9",
+    "device_phone_number": "",
+    "name": "9 Sungrow320kW",
+    "unit_key": "4dd2d29569",
+    "site_key": "6b809f8b8b",
+    "site_name": "JOD01",
+    "status": "Active",
+    "last_event_ts": 1762950000,
+    "unit_category_name": "Inverter"
+  },
+  {
+    "device_key": null,
+    "device_phone_number": "",
+    "name": "WMS",
+    "unit_key": "4df7b4c99a",
+    "site_key": "6b809f8b8b",
+    "site_name": "JOD01",
+    "status": "Active",
+    "last_event_ts": 1762950000,
+    "unit_category_name": "Weather Monitoring"
+  }
+]

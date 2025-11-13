@@ -7,6 +7,6 @@ export default defineConfig({
     port: 5173,
     // optional but handy for tunnels:
     host: true,
-    allowedHosts: ['e3a01f313d79.ngrok-free.app'],
+    allowedHosts: ['97c3d6f5dbc2.ngrok-free.app'],
   },
 })
