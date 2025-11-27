@@ -1,15 +1,9 @@
 import siteCatalog from './sites.json';
-import telemetryCsv from './JOD01/inverter wms and meter data/Solar91 _ Trackso API Data - Sheet1.csv?raw';
-
-const TARGET_SITE_KEY = '6b809f8b8b';
-const HISTORY_DAYS = 14;
-
-const slugify = (value, delimiter = '-') =>
-  value
-    ?.toString()
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, delimiter)
-    .replace(new RegExp(`^${delimiter}+|${delimiter}+$`, 'g'), '') ?? '';
+import novemberRaw from './JOD01/inverter wms and meter data/november.json?raw';
+import unitsRaw from './JOD01/units.json?raw';
+import siteOutputActivePowerRaw from './JOD01/inverter wms and meter data/siteOutputActivePower.json?raw';
+import solarIrradiationRaw from './JOD01/inverter wms and meter data/solarIrradiation.json?raw';
+import dailyEnergyRaw from './JOD01/inverter wms and meter data/dailyEnergy.json?raw';
 
 const parseNumeric = (value) => {
   if (value === undefined || value === null) return undefined;
@@ -23,6 +17,302 @@ const toNumber = (value, fallback = 0) => {
   const numeric = parseNumeric(value);
   return numeric === undefined ? fallback : numeric;
 };
+
+const TARGET_SITE_KEY = '6a11fc90ac';
+const HISTORY_DAYS = 14;
+
+const parseNovemberDailyFile = (raw) => {
+  try {
+    const parsed = JSON.parse(raw);
+    const source = Array.isArray(parsed) ? parsed.find(Boolean) : parsed;
+    if (!source || typeof source !== 'object') return [];
+
+    // New structure: { rows: [ [ { Data, value }, ... ], ... ] }
+    if (Array.isArray(source.rows)) {
+      const normalizeRow = (rowArray) => {
+        if (!Array.isArray(rowArray)) return null;
+        let date = null;
+        const entries = [];
+        for (let index = 0; index < rowArray.length; index += 1) {
+          const item = rowArray[index];
+          if (!item || typeof item !== 'object') continue;
+          if (item.Data === 'Date') {
+            date = item.value ?? date;
+            continue;
+          }
+          if (typeof item.Data === 'string' && item.Data.toLowerCase().includes('sungrow')) {
+            const capacityEntry =
+              rowArray[index + 1]?.Data === 'DC Capacity 1' ? rowArray[index + 1] : null;
+            const generationPerKwEntry =
+              rowArray[index + 2]?.Data?.toLowerCase?.().includes('generation per kw')
+                ? rowArray[index + 2]
+                : null;
+            entries.push({
+              unitName: item.Data,
+              value: item.value,
+              'DC Capacity 1': capacityEntry?.value,
+              generationPerKw: generationPerKwEntry?.value
+            });
+          }
+        }
+        return date ? { date, entries } : null;
+      };
+
+      return source.rows
+        .map((row) => normalizeRow(row))
+        .filter(Boolean)
+        .sort((a, b) => a.date.localeCompare(b.date));
+    }
+
+    // Legacy structure: { "1": { "2025-11-01": [...] } }
+    const dayMap =
+      Object.values(source).find(
+        (value) => value && typeof value === 'object' && !Array.isArray(value)
+      ) ?? source;
+    return Object.entries(dayMap)
+      .filter(([date]) => date)
+      .map(([date, entries]) => ({
+        date,
+        entries: Array.isArray(entries) ? entries : []
+      }))
+      .sort((a, b) => a.date.localeCompare(b.date));
+  } catch (error) {
+    console.warn('Unable to parse November JSON file', error);
+    return [];
+  }
+};
+
+const ASADI_DAILY_BUCKETS = parseNovemberDailyFile(novemberRaw);
+const UNITS_CATALOG = (() => {
+  try {
+    const parsed = JSON.parse(unitsRaw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (error) {
+    console.warn('Unable to parse units.json', error);
+    return [];
+  }
+})();
+const parseIntradayArray = (raw, label) => {
+  try {
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (error) {
+    console.warn(`Unable to parse ${label ?? 'intraday'} JSON file`, error);
+    return [];
+  }
+};
+
+const OUTPUT_ACTIVE_POWER_SERIES = parseIntradayArray(siteOutputActivePowerRaw, 'siteOutputActivePower');
+const SOLAR_IRRADIATION_SERIES = parseIntradayArray(solarIrradiationRaw, 'solarIrradiation');
+const DAILY_ENERGY_SERIES = parseIntradayArray(dailyEnergyRaw, 'dailyEnergy');
+
+const combineIntradaySeries = (powerSeries, irradiationSeries, energySeries, prSeries = []) => {
+  const map = new Map();
+  const normalizeTimestamp = (timestamp) => Math.round(timestamp / 60) * 60;
+  const ensure = (timestamp) => {
+    if (!map.has(timestamp)) {
+      map.set(timestamp, { timestamp });
+    }
+    return map.get(timestamp);
+  };
+
+  powerSeries.forEach((entry) => {
+    if (entry?.timestamp == null) return;
+    const target = ensure(normalizeTimestamp(entry.timestamp));
+    target.activePower = toNumber(entry.value, 0);
+    target.hasActivePower = true;
+    target.parameter_name = entry.parameter_name ?? target.parameter_name;
+  });
+
+  irradiationSeries.forEach((entry) => {
+    if (entry?.timestamp == null) return;
+    const target = ensure(normalizeTimestamp(entry.timestamp));
+    target.solarIrradiation = toNumber(entry.value, 0);
+    target.hasSolarIrradiation = true;
+    target.parameter_name = entry.parameter_name ?? target.parameter_name;
+  });
+
+  energySeries.forEach((entry) => {
+    if (entry?.timestamp == null) return;
+    const target = ensure(normalizeTimestamp(entry.timestamp));
+    target.dailyEnergy = toNumber(entry.value, 0);
+    target.hasDailyEnergy = true;
+    target.parameter_name = entry.parameter_name ?? target.parameter_name;
+  });
+
+  prSeries.forEach((entry) => {
+    if (entry?.timestamp == null) return;
+    const target = ensure(normalizeTimestamp(entry.timestamp));
+    target.prPct = toNumber(entry.value, 0);
+    target.hasPr = true;
+    target.parameter_name = entry.parameter_name ?? target.parameter_name;
+  });
+
+  const capacityKw = 3402.98;
+  map.forEach((value) => {
+    const powerKwp = value.activePower ?? 0;
+    const irr = value.solarIrradiation ?? 0;
+    if (!value.hasPr) {
+      value.prPct =
+        powerKwp != null && irr > 0
+          ? (powerKwp * 1000 * 100) / (capacityKw * irr)
+          : 0;
+    }
+  });
+
+  return Array.from(map.values()).sort((a, b) => a.timestamp - b.timestamp);
+};
+
+const monthLookup = {
+  jan: '01',
+  feb: '02',
+  mar: '03',
+  apr: '04',
+  may: '05',
+  jun: '06',
+  jul: '07',
+  aug: '08',
+  sep: '09',
+  oct: '10',
+  nov: '11',
+  dec: '12'
+};
+
+const SPECIAL_FOLDER_DATES = {
+  'inverter wms and meter data': '2025-11-25'
+};
+
+const toIsoDateFromFolder = (folderName) => {
+  if (!folderName) return null;
+  const safeName = folderName.toString();
+  const normalized = safeName.toLowerCase();
+  if (SPECIAL_FOLDER_DATES[normalized]) {
+    return SPECIAL_FOLDER_DATES[normalized];
+  }
+  const match = safeName.match(/(\d{1,2})([A-Za-z]{3})(\d{4})/);
+  if (!match) return null;
+  const [, day, month, year] = match;
+  const monthCode = monthLookup[month.toLowerCase()];
+  if (!monthCode) return null;
+  const paddedDay = day.padStart(2, '0');
+  return `${year}-${monthCode}-${paddedDay}`;
+};
+
+const loadIntradayByDate = () => {
+  const powerFiles = import.meta.glob('./JOD01/*/siteOutputActivePower.json', {
+    eager: true,
+    import: 'default'
+  });
+  const irradiationFiles = import.meta.glob('./JOD01/*/solarIrradiation.json', {
+    eager: true,
+    import: 'default'
+  });
+  const energyFiles = import.meta.glob('./JOD01/*/dailyEnergy.json', { eager: true, import: 'default' });
+  const prFiles = import.meta.glob('./JOD01/*/Pr.json', { eager: true, import: 'default' });
+
+  const store = new Map();
+  const ensure = (isoDate) => {
+    if (!store.has(isoDate)) {
+      store.set(isoDate, { power: [], irradiation: [], energy: [], pr: [] });
+    }
+    return store.get(isoDate);
+  };
+
+  const assignSeries = (files, key) => {
+    Object.entries(files).forEach(([path, data]) => {
+      const match = path.match(/\.\/JOD01\/([^/]+)\//);
+      if (!match) return;
+      const isoDate = toIsoDateFromFolder(match[1]);
+      if (!isoDate) return;
+      const target = ensure(isoDate);
+      target[key] = Array.isArray(data) ? data : [];
+    });
+  };
+
+  assignSeries(powerFiles, 'power');
+  assignSeries(irradiationFiles, 'irradiation');
+  assignSeries(energyFiles, 'energy');
+  assignSeries(prFiles, 'pr');
+
+  const byDate = {};
+  store.forEach((value, isoDate) => {
+    byDate[isoDate] = combineIntradaySeries(
+      value.power,
+      value.irradiation,
+      value.energy,
+      value.pr
+    );
+  });
+
+  const dates = [...store.keys()].sort();
+  return { byDate, dates };
+};
+
+const loadCardsByDate = () => {
+  const cardFiles = import.meta.glob('./JOD01/*/cardsData.json', {
+    eager: true,
+    import: 'default'
+  });
+
+  const byDate = {};
+  Object.entries(cardFiles).forEach(([path, data]) => {
+    const match = path.match(/\.\/JOD01\/([^/]+)\//);
+    if (!match) return;
+    const isoDate = toIsoDateFromFolder(match[1]);
+    if (!isoDate) return;
+    byDate[isoDate] = data && typeof data === 'object' ? data : {};
+  });
+
+  const dates = Object.keys(byDate).sort();
+  return { byDate, dates };
+};
+
+const { byDate: INTRADAY_BY_DATE, dates: AVAILABLE_INTRADAY_DATES } = loadIntradayByDate();
+const { byDate: CARD_DATA_BY_DATE, dates: AVAILABLE_CARD_DATES } = loadCardsByDate();
+
+const HARD_MAX_DATE = '2025-11-25';
+const EARLIEST_INTRADAY_DATE = AVAILABLE_INTRADAY_DATES[0] ?? HARD_MAX_DATE;
+const DEFAULT_SELECTED_DATE =
+  AVAILABLE_INTRADAY_DATES.length > 0
+    ? AVAILABLE_INTRADAY_DATES.at(-1)
+    : HARD_MAX_DATE;
+
+const clampDateToBounds = (value) => {
+  const iso = (value ?? '').toString().slice(0, 10);
+  const parsed = new Date(`${iso}T00:00:00`);
+  if (!Number.isFinite(parsed.getTime())) {
+    return DEFAULT_SELECTED_DATE;
+  }
+  if (iso < EARLIEST_INTRADAY_DATE) return EARLIEST_INTRADAY_DATE;
+  if (iso > HARD_MAX_DATE) return HARD_MAX_DATE;
+  return iso;
+};
+
+const pickAvailableDate = (targetDate, availableDates) => {
+  const dates = Array.isArray(availableDates) ? [...availableDates] : [];
+  if (!dates.length) return clampDateToBounds(targetDate);
+  dates.sort();
+  const desired = clampDateToBounds(targetDate);
+  const eligible = dates.filter((date) => date <= desired);
+  if (eligible.length) return eligible.at(-1);
+  return dates[0];
+};
+
+const ASADI_LAST_DAY_SERIES =
+  AVAILABLE_INTRADAY_DATES.length > 0
+    ? INTRADAY_BY_DATE[AVAILABLE_INTRADAY_DATES.at(-1)] ?? []
+    : combineIntradaySeries(
+        OUTPUT_ACTIVE_POWER_SERIES,
+        SOLAR_IRRADIATION_SERIES,
+        DAILY_ENERGY_SERIES
+      );
+
+const slugify = (value, delimiter = '-') =>
+  value
+    ?.toString()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, delimiter)
+    .replace(new RegExp(`^${delimiter}+|${delimiter}+$`, 'g'), '') ?? '';
 
 const mapSiteStatus = (status) => {
   if (!status) return 'Offline';
@@ -54,6 +344,126 @@ const deriveVendor = (name = '') => {
   if (lower.includes('wms') || lower.includes('weather')) return 'TrackSo';
   if (lower.includes('meter')) return 'Schneider';
   return 'Solar91';
+};
+
+const buildAsadiEnergySeries = (dailyBuckets, capacityMw) => {
+  if (!dailyBuckets.length) return [];
+
+  return dailyBuckets.map(({ date, entries }) => {
+    const totalKwh = (entries ?? []).reduce((sum, entry) => sum + toNumber(entry.value, 0), 0);
+    const totalDcKw = (entries ?? []).reduce(
+      (sum, entry) => sum + toNumber(entry['DC Capacity 1'], 0),
+      0
+    );
+    const genPerKwValues = (entries ?? [])
+      .map((entry) => toNumber(entry.generationPerKw, NaN))
+      .filter((value) => Number.isFinite(value));
+    const avgGenerationPerKw = genPerKwValues.length
+      ? +(genPerKwValues.reduce((sum, value) => sum + value, 0) / genPerKwValues.length).toFixed(2)
+      : null;
+
+    return {
+      date,
+      energyMWh: +((totalKwh ?? 0) / 1000).toFixed(2),
+      energyKWh: +totalKwh.toFixed(2),
+      totalDcCapacityMw: +(totalDcKw / 1000).toFixed(3),
+      totalDcCapacityKw: +totalDcKw.toFixed(2),
+      avgGenerationPerKw,
+      // Keep optional fields to avoid downstream NaN
+      peakPowerMw: 0,
+      availabilityPct: null,
+      performanceRatioPct: null,
+      irradianceWhm2: 0
+    };
+  });
+};
+
+const buildAsadiUnits = (meta, latestEntries, capacityMw) => {
+  const siteKey = meta.site_key ?? TARGET_SITE_KEY;
+  const catalogUnits = UNITS_CATALOG.filter((unit) => unit.site_key === siteKey);
+  const deriveType = (category, name = '') => {
+    const lower = name.toLowerCase();
+    if (category?.toLowerCase() === 'inverter' || lower.includes('sungrow')) return 'Central Inverter';
+    if (category?.toLowerCase().includes('meter')) return 'Energy Meter';
+    if (category?.toLowerCase().includes('weather')) return 'Weather Station';
+    return 'Auxiliary';
+  };
+
+  if (catalogUnits.length) {
+    const inverterCount = catalogUnits.filter(
+      (unit) => deriveType(unit.unit_category_name, unit.name) === 'Central Inverter'
+    ).length;
+    const safeCount = inverterCount || catalogUnits.length || 1;
+    const ratedKwPerInverter = +(capacityMw * 1000 / safeCount).toFixed(1);
+    return catalogUnits.map((unit, index) => {
+      const type = deriveType(unit.unit_category_name, unit.name);
+      const ratedKw = type === 'Central Inverter' ? ratedKwPerInverter : +(capacityMw * 50).toFixed(1);
+      const lastOutputKwh = +(ratedKw * 0.2).toFixed(1);
+      return {
+        id: unit.name ?? unit.unit_key ?? `UNIT-${index + 1}`,
+        type,
+        vendor: deriveVendor(unit.name ?? ''),
+        ratedKw,
+        ratedMw: +(ratedKw / 1000).toFixed(3),
+        status: mapSiteStatus(unit.status),
+        lastOutputKwh,
+        lastOutputMwh: +(lastOutputKwh / 1000).toFixed(3),
+        temperatureC: 38 + (type === 'Central Inverter' ? 4 : 0),
+        issues: 0
+      };
+    });
+  }
+
+  const entries = Array.isArray(latestEntries) ? latestEntries : [];
+  if (!entries.length) {
+    return [
+      {
+        id: 'INV-IND-1',
+        type: 'Central Inverter',
+        vendor: 'Sungrow',
+        ratedKw: +(capacityMw * 1000).toFixed(1),
+        ratedMw: +capacityMw.toFixed(2),
+        status: 'Online',
+        lastOutputKwh: +(capacityMw * 1000 * 0.2).toFixed(1),
+        lastOutputMwh: +(capacityMw * 0.2).toFixed(2),
+        temperatureC: 42,
+        issues: 0
+      }
+    ];
+  }
+
+  return entries.map((entry, index) => {
+    const ratedMw =
+      toNumber(entry['DC Capacity 1'], capacityMw ? (capacityMw * 1000) / entries.length : 0) / 1000;
+    const ratedKw = ratedMw * 1000;
+    const lastOutputKwh = +(toNumber(entry.value, 0)).toFixed(2);
+    return {
+      id: entry.unitName ?? entry.unitKey ?? `INV-${index + 1}`,
+      type: 'Central Inverter',
+      vendor: deriveVendor(entry.unitName ?? ''),
+      ratedKw: +(ratedKw || (capacityMw / Math.max(1, entries.length)) * 1000).toFixed(1),
+      ratedMw: +(ratedMw || capacityMw / Math.max(1, entries.length)).toFixed(2),
+      status: 'Online',
+      lastOutputKwh,
+      lastOutputMwh: +(lastOutputKwh / 1000).toFixed(3),
+      temperatureC: +(42 - index * 0.8).toFixed(1),
+      issues: 0
+    };
+  });
+};
+
+const buildAsadiLastDaySeries = (dailyBuckets) => {
+  const latest = dailyBuckets.at(-1);
+  if (!latest) return [];
+  const totalEntries = latest.entries?.length ?? 0;
+  const span = Math.max(1, totalEntries - 1);
+  const baseTimestamp = Math.floor(new Date(`${latest.date}T06:00:00`).getTime() / 1000);
+  return (latest.entries ?? []).map((entry, index) => ({
+    timestamp: baseTimestamp + index * 1800,
+    dailyEnergy: toNumber(entry.value, 0),
+    activePower: +(toNumber(entry.value, 0) / 24).toFixed(1),
+    solarIrradiation: Math.round(500 + (index / span) * 150)
+  }));
 };
 
 const sanitizeFieldKey = (base, usedKeys, index) => {
@@ -183,8 +593,6 @@ const parseTelemetryFile = (raw) => {
   };
 };
 
-const telemetryDataset = parseTelemetryFile(telemetryCsv);
-
 const dateISO = (offsetDays) => {
   const date = new Date();
   date.setHours(12, 0, 0, 0);
@@ -224,9 +632,8 @@ const buildHistoryFields = (columns) => {
     { key: 'time', label: 'Time', canHide: true },
     { key: 'energyMWh', label: 'Energy (MWh)', precision: 2 },
     { key: 'peakPowerMw', label: 'Peak Power (MW)', precision: 2 },
-    { key: 'availabilityPct', label: 'CUF (%)', precision: 2 },
     { key: 'performanceRatioPct', label: 'PR (%)', precision: 2 },
-    { key: 'irradianceWhm2', label: 'Irradiance (Wh/m²)', precision: 0 }
+    { key: 'irradianceWhm2', label: 'Irradiance (Wh/m2)', precision: 0 }
   ];
 
   const result = [];
@@ -242,8 +649,12 @@ const buildHistoryFields = (columns) => {
     if (!column.label || column.label === 'Date' || column.label === 'Time') return;
     const label =
       column.group && column.group !== 'Inverter'
-        ? `${column.group} – ${column.label}`
+        ? `${column.group} - ${column.label}`
         : column.label;
+    const normalizedLabel = label.toLowerCase();
+    if (normalizedLabel.includes('cuf') || normalizedLabel.includes('availab')) {
+      return;
+    }
     pushUnique({
       key: column.key,
       label,
@@ -320,9 +731,9 @@ const buildAlarmsFromSeries = (energySeries, units) => {
     id: `alm-${entry.date.replace(/-/g, '')}-${index + 1}`,
     unitId: units[index % units.length]?.id ?? 'INV-1',
     severity: severityOrder[index] ?? 'Low',
-    message: `Generation dipped to ${entry.energyMWh.toFixed(2)} MWh (CUF ${entry.availabilityPct.toFixed(
-      1
-    )} %).`,
+    message: `Generation dipped to ${entry.energyMWh.toFixed(2)} MWh (PR ${Number(
+      entry.performanceRatioPct ?? 0
+    ).toFixed(1)} %).`,
     triggeredAt: `${entry.date}T06:00:00+05:30`,
     acknowledgedBy: null,
     resolvedAt: null
@@ -333,9 +744,8 @@ const defaultHistoryFields = [
   { key: 'date', label: 'Date', canHide: false },
   { key: 'energyMWh', label: 'Energy (MWh)', precision: 2 },
   { key: 'peakPowerMw', label: 'Peak (MW)', precision: 2 },
-  { key: 'availabilityPct', label: 'Availability %', precision: 1 },
   { key: 'performanceRatioPct', label: 'PR (%)', precision: 1 },
-  { key: 'irradianceWhm2', label: 'Irradiance (Wh/m²)', precision: 0 }
+  { key: 'irradianceWhm2', label: 'Irradiance (Wh/m2)', precision: 0 }
 ];
 
 const mulberry32 = (seedString) => {
@@ -376,13 +786,17 @@ const generateUnits = (rng, capacityMw, siteName) => {
     const statusRoll = rng();
     const status =
       statusRoll > 0.95 ? 'Offline' : statusRoll > 0.85 ? 'Warning' : statusRoll > 0.9 ? 'Maintenance' : 'Online';
+    const ratedKw = ratedPerInverter * 1000;
+    const lastOutputMwh = +(ratedPerInverter * (0.7 + rng() * 0.2)).toFixed(2);
     return {
       id: `INV-${index + 1}-${siteName.slice(0, 3).toUpperCase()}`,
       type: 'Central Inverter',
       vendor: 'Sungrow',
       ratedMw: ratedPerInverter,
+      ratedKw: +(ratedKw).toFixed(1),
       status,
-      lastOutputMwh: +(ratedPerInverter * (0.7 + rng() * 0.2)).toFixed(2),
+      lastOutputKwh: +(lastOutputMwh * 1000).toFixed(1),
+      lastOutputMwh,
       temperatureC: +(38 + rng() * 6).toFixed(1),
       issues: status === 'Online' ? 0 : 1
     };
@@ -393,7 +807,9 @@ const generateUnits = (rng, capacityMw, siteName) => {
     type: 'Energy Meter',
     vendor: 'Schneider',
     ratedMw: 0.05,
+    ratedKw: 50,
     status: 'Online',
+    lastOutputKwh: +(capacityMw * 0.95 * 1000).toFixed(1),
     lastOutputMwh: +(capacityMw * 0.95).toFixed(2),
     temperatureC: +(32 + rng() * 3).toFixed(1),
     issues: 0
@@ -404,7 +820,9 @@ const generateUnits = (rng, capacityMw, siteName) => {
     type: 'Weather Station',
     vendor: 'TrackSo',
     ratedMw: 0,
+    ratedKw: 0,
     status: 'Online',
+    lastOutputKwh: 0,
     lastOutputMwh: 0,
     temperatureC: +(30 + rng() * 2).toFixed(1),
     issues: 0
@@ -492,60 +910,37 @@ const buildSyntheticSite = (meta) => {
     units,
     alarms,
     historyFields: defaultHistoryFields.map((field) => ({ ...field })),
+    cardsByDate: {},
+    availableCardDates: [],
     sharedAccess: []
   };
 };
 
-const buildJodSite = (meta) => {
-  if (!telemetryDataset.rows.length) {
-    return buildSyntheticSite(meta);
-  }
-
-  const siteName = meta.name ?? 'JOD01';
+const buildAsadiSite = (meta, selectedDate = DEFAULT_SELECTED_DATE) => {
+  const siteName = meta.name ?? 'Asadi';
   const siteId = `site-${slugify(meta.site_key ?? siteName)}`;
   const rawCapacityMw = toNumber(meta.site_capacity, 0) / 1000;
   const capacityMw = rawCapacityMw > 0 ? +rawCapacityMw.toFixed(3) : 0;
-  const labelKeyMap = new Map();
-  telemetryDataset.columns.forEach((column) => {
-    if (!labelKeyMap.has(column.label)) {
-      labelKeyMap.set(column.label, column.key);
-    }
-  });
+  const energySeries = buildAsadiEnergySeries(ASADI_DAILY_BUCKETS, capacityMw);
 
-  const getValue = (row, label, fallback = 0) => {
-    const key = labelKeyMap.get(label);
-    if (!key) return fallback;
-    const value = row[key];
-    return typeof value === 'number' ? value : fallback;
-  };
-
-  const energySeries = telemetryDataset.rows.map((row) => {
-    const totalGeneration = getValue(row, 'Total Generation', 0);
-    const energyMWh = totalGeneration / 1000;
-    const availability = getValue(row, 'CUF', 0);
-    const performance = getValue(row, 'PR%', availability);
-    const irradiance = getValue(row, 'Solar Irradiation', 0);
-
-    return {
-      ...row,
-      energyMWh: +energyMWh.toFixed(2),
-      peakPowerMw: capacityMw ? +(capacityMw * 0.95).toFixed(2) : 0,
-      availabilityPct: +Math.max(0, Math.min(100, availability)).toFixed(2),
-      performanceRatioPct: +Math.max(0, Math.min(100, performance)).toFixed(2),
-      irradianceWhm2: Math.max(0, Math.round(irradiance * 100))
-    };
-  });
+  if (!energySeries.length) {
+    return buildSyntheticSite(meta);
+  }
 
   const avgAvailability =
     energySeries.reduce((sum, entry) => sum + entry.availabilityPct, 0) / energySeries.length;
   const avgPerformance =
     energySeries.reduce((sum, entry) => sum + entry.performanceRatioPct, 0) / energySeries.length;
-
-  const latestRow = telemetryDataset.rows.at(-1);
-  const latestWeather = buildWeatherSnapshot(latestRow, labelKeyMap);
-  const historyFields = buildHistoryFields(telemetryDataset.columns);
-  const units = buildUnitsFromTelemetry(telemetryDataset.columns, telemetryDataset.rows, capacityMw);
+  const latestEntry = energySeries.at(-1);
+  const units = buildAsadiUnits(meta, ASADI_DAILY_BUCKETS.at(-1)?.entries ?? [], capacityMw);
   const alarms = buildAlarmsFromSeries(energySeries, units);
+  const effectiveDate = pickAvailableDate(selectedDate, AVAILABLE_INTRADAY_DATES);
+  const lastDayData =
+    AVAILABLE_INTRADAY_DATES.length > 0
+      ? INTRADAY_BY_DATE[effectiveDate] ?? []
+      : ASADI_LAST_DAY_SERIES.length > 0
+      ? ASADI_LAST_DAY_SERIES
+      : buildAsadiLastDaySeries(ASADI_DAILY_BUCKETS);
 
   const coordinates =
     Array.isArray(meta.coordinates) && meta.coordinates.every((value) => value?.trim?.())
@@ -555,6 +950,21 @@ const buildJodSite = (meta) => {
     ? `Lat ${coordinates[0]}, Lon ${coordinates[1]}`
     : meta.description?.trim() || 'Location unavailable';
 
+  const safeDayLabel = (dateString, fallbackIndex) => {
+    const parsed = new Date(`${dateString}T00:00:00`);
+    if (Number.isFinite(parsed.getTime())) {
+      return new Intl.DateTimeFormat('en-US', { weekday: 'short' }).format(parsed);
+    }
+    return ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'][fallbackIndex % 7] || 'Day';
+  };
+
+  const historyFields = [
+    { key: 'date', label: 'Date', canHide: false },
+    { key: 'energyKWh', label: 'Energy (kWh)', precision: 0, canHide: false },
+    { key: 'totalDcCapacityKw', label: 'Total DC Capacity (kW)', precision: 1, canHide: true },
+    { key: 'avgGenerationPerKw', label: 'Avg Generation per kW', precision: 2, canHide: true }
+  ];
+
   return {
     id: siteId,
     siteKey: meta.site_key ?? TARGET_SITE_KEY,
@@ -563,39 +973,49 @@ const buildJodSite = (meta) => {
     capacityMw: capacityMw ? +capacityMw.toFixed(2) : 0,
     status: mapSiteStatus(meta.status),
     installedAt: energySeries[0]?.date ?? '2024-01-01',
-    lastUpdated: energySeries.at(-1)?.date
-      ? `${energySeries.at(-1).date}T23:59:00+05:30`
+    lastUpdated: latestEntry?.date
+      ? `${latestEntry.date}T23:59:00+05:30`
       : new Date().toISOString(),
     technology: [
-      '9 x Sungrow 320 kW inverter block',
-      'Schneider EM metering stack',
-      'TrackSo weather monitoring system'
+      '5 x Sungrow 320 kW inverters',
+      'Schneider energy metering',
+      'TrackSo weather monitoring'
     ],
     avgAvailabilityPct: +avgAvailability.toFixed(2),
     performanceRatioPct: +avgPerformance.toFixed(2),
     energySeries,
     weather: {
-      current: latestWeather,
+      current: {
+        temperatureC: 31.5,
+        humidityPct: 56,
+        windKph: 6.1,
+        ghi: Math.round(latestEntry?.irradianceWhm2 ?? 0),
+        condition: latestEntry?.irradianceWhm2 > 550 ? 'Sunny' : 'Partly cloudy'
+      },
       forecast: energySeries.slice(-3).map((entry, index) => ({
-        day:
-          new Intl.DateTimeFormat('en-US', { weekday: 'short' }).format(
-            new Date(`${entry.date}T00:00:00`)
-          ),
-        conditions: entry.irradianceWhm2 > 600 ? 'Sunny' : entry.irradianceWhm2 > 250 ? 'Cloudy' : 'Overcast',
-        temperatureC: Math.round(
-          latestWeather.temperatureC + (entry.availabilityPct - avgAvailability) * 0.1 - index
-        )
+        day: safeDayLabel(entry.date, index),
+        conditions: entry.irradianceWhm2 > 600 ? 'Sunny' : entry.irradianceWhm2 > 350 ? 'Cloudy' : 'Overcast',
+        temperatureC: Math.round(30 + (entry.performanceRatioPct - avgPerformance) * 0.1 - index)
       }))
     },
     units,
     alarms,
     historyFields,
+    selectedIntradayDate: effectiveDate,
+    lastDayData,
+    intradayByDate: INTRADAY_BY_DATE,
+    availableIntradayDates: AVAILABLE_INTRADAY_DATES,
+    cardsByDate: CARD_DATA_BY_DATE,
+    availableCardDates: AVAILABLE_CARD_DATES,
     sharedAccess: []
   };
 };
 
-const seedSites = siteCatalog.map((site) =>
-  site.site_key === TARGET_SITE_KEY ? buildJodSite(site) : buildSyntheticSite(site)
+const siteCatalogEntriesRaw = Array.isArray(siteCatalog?.sites) ? siteCatalog.sites : siteCatalog;
+const siteCatalogEntries = Array.isArray(siteCatalogEntriesRaw) ? siteCatalogEntriesRaw : [];
+const filteredSites = siteCatalogEntries.filter((site) => site.site_key === TARGET_SITE_KEY);
+const seedSites = (filteredSites.length ? filteredSites : siteCatalogEntries.slice(0, 1)).map((site) =>
+  site.site_key === TARGET_SITE_KEY ? buildAsadiSite(site, DEFAULT_SELECTED_DATE) : buildSyntheticSite(site)
 );
 
 const allSiteIds = seedSites.map((site) => site.id);
@@ -625,6 +1045,13 @@ export const seedUsers = [
 ];
 
 export { seedSites };
+export {
+  AVAILABLE_INTRADAY_DATES,
+  EARLIEST_INTRADAY_DATE,
+  HARD_MAX_DATE,
+  DEFAULT_SELECTED_DATE,
+  INTRADAY_BY_DATE
+};
 
 export const fleetBenchmarks = {
   totalCapacityMw: seedSites.reduce((acc, site) => acc + site.capacityMw, 0),

@@ -1,0 +1,247 @@
+[
+  {
+    "timestamp": 1763515799,
+    "value": 0.0,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763515799
+  },
+  {
+    "timestamp": 1763517599,
+    "value": 36.213,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763517599
+  },
+  {
+    "timestamp": 1763519399,
+    "value": 216.444,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763519399
+  },
+  {
+    "timestamp": 1763521199,
+    "value": 630.611,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763521199
+  },
+  {
+    "timestamp": 1763522999,
+    "value": 1013.976,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763522999
+  },
+  {
+    "timestamp": 1763524799,
+    "value": 1344.739,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763524799
+  },
+  {
+    "timestamp": 1763526599,
+    "value": 1629.368,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763526599
+  },
+  {
+    "timestamp": 1763528399,
+    "value": 1854.653,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763528399
+  },
+  {
+    "timestamp": 1763530199,
+    "value": 2036.428,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763530199
+  },
+  {
+    "timestamp": 1763531999,
+    "value": 2180.289,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763531999
+  },
+  {
+    "timestamp": 1763533799,
+    "value": 2265.173,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763533799
+  },
+  {
+    "timestamp": 1763535599,
+    "value": 2306.803,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763535599
+  },
+  {
+    "timestamp": 1763537399,
+    "value": 2282.095,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763537399
+  },
+  {
+    "timestamp": 1763539199,
+    "value": 2229.961,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763539199
+  },
+  {
+    "timestamp": 1763540999,
+    "value": 2123.363,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763540999
+  },
+  {
+    "timestamp": 1763542799,
+    "value": 2009.591,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763542799
+  },
+  {
+    "timestamp": 1763544599,
+    "value": 1818.293,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763544599
+  },
+  {
+    "timestamp": 1763546399,
+    "value": 1551.188,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763546399
+  },
+  {
+    "timestamp": 1763548199,
+    "value": 1257.314,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763548199
+  },
+  {
+    "timestamp": 1763549999,
+    "value": 936.569,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763549999
+  },
+  {
+    "timestamp": 1763551799,
+    "value": 573.243,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763551799
+  },
+  {
+    "timestamp": 1763553599,
+    "value": 179.896,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763553599
+  },
+  {
+    "timestamp": 1763555399,
+    "value": 17.416,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763555399
+  },
+  {
+    "timestamp": 1763557199,
+    "value": 0.596,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763557199
+  },
+  {
+    "timestamp": 1763558999,
+    "value": 0.0,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763558999
+  },
+  {
+    "timestamp": 1763560799,
+    "value": 0.0,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763560799
+  },
+  {
+    "timestamp": 1763562599,
+    "value": 0.0,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763562599
+  },
+  {
+    "timestamp": 1763564399,
+    "value": 0.0,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763564399
+  },
+  {
+    "timestamp": 1763566199,
+    "value": 0.0,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763566199
+  },
+  {
+    "timestamp": 1763567999,
+    "value": 0.0,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763567999
+  },
+  {
+    "timestamp": 1763569799,
+    "value": 0.0,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763569799
+  },
+  {
+    "timestamp": 1763571599,
+    "value": 0.0,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763571599
+  },
+  {
+    "timestamp": 1763573399,
+    "value": 0.0,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763573399
+  },
+  {
+    "timestamp": 1763575199,
+    "value": 0.0,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763575199
+  },
+  {
+    "timestamp": 1763576999,
+    "value": 0.0,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763576999
+  }
+]

@@ -5,12 +5,6 @@ import { useDashboardStore } from '../store/dashboardStore.js';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card.jsx';
 import { DataTable } from '../components/data-table/data-table.jsx';
 
-const rangeToDays = {
-  '7d': 7,
-  '30d': 30,
-  '90d': 90
-};
-
 const energyColumns = [
   {
     accessorKey: 'name',
@@ -42,10 +36,10 @@ const energyColumns = [
 ];
 
 const FleetOverview = () => {
-  const { user, sites, dateRange, fleetBenchmarks } = useDashboardStore((state) => ({
+  const { user, sites, selectedDate, fleetBenchmarks } = useDashboardStore((state) => ({
     user: state.user,
     sites: state.sites,
-    dateRange: state.dateRange,
+    selectedDate: state.selectedDate,
     fleetBenchmarks: state.fleetBenchmarks
   }));
 
@@ -54,7 +48,7 @@ const FleetOverview = () => {
   }
 
   const accessibleSites = sites.filter((site) => user.accessibleSiteIds.includes(site.id));
-  const windowSize = rangeToDays[dateRange] ?? 7;
+  const windowSize = 7;
 
   const aggregateSeriesMap = new Map();
 
@@ -65,12 +59,10 @@ const FleetOverview = () => {
         date: entry.date,
         energyMWh: 0,
         irradianceWhm2: 0,
-        availabilityPct: 0,
         samples: 0
       };
       bucket.energyMWh += entry.energyMWh;
       bucket.irradianceWhm2 += entry.irradianceWhm2;
-      bucket.availabilityPct += entry.availabilityPct;
       bucket.samples += 1;
       aggregateSeriesMap.set(entry.date, bucket);
     });
@@ -80,7 +72,6 @@ const FleetOverview = () => {
     .sort((a, b) => a.date.localeCompare(b.date))
     .map((entry) => ({
       ...entry,
-      availabilityPct: entry.samples ? +(entry.availabilityPct / entry.samples).toFixed(1) : 0,
       irradianceWhm2: entry.samples ? Math.round(entry.irradianceWhm2 / entry.samples) : 0
     }));
 
@@ -112,11 +103,6 @@ const FleetOverview = () => {
       ? [...accessibleSites].sort((a, b) => b.performanceRatioPct - a.performanceRatioPct)[0]
       : null;
 
-  const highestAvailability =
-    accessibleSites.length > 0
-      ? [...accessibleSites].sort((a, b) => b.avgAvailabilityPct - a.avgAvailabilityPct)[0]
-      : null;
-
   const energyLeaders = accessibleSites
     .map((site) => ({
       id: site.id,
@@ -146,7 +132,7 @@ const FleetOverview = () => {
             trend: energyDelta >= 0 ? 'positive' : 'negative',
             text: `${energyDelta >= 0 ? '+' : ''}${energyDelta.toFixed(1)} MWh day over day`
           }}
-          hint={`Window: ${dateRange}`}
+          hint={`Date: ${selectedDate}`}
           icon={Activity}
         />
         <StatCard
@@ -171,7 +157,7 @@ const FleetOverview = () => {
         />
       </section>
 
-      <section className="grid gap-6 xl:grid-cols-2">
+      <section className="grid gap-6">
         <TrendChart
           title="Generation vs irradiance"
           subtitle="Normalised per day across selected window."
@@ -181,13 +167,6 @@ const FleetOverview = () => {
             { dataKey: 'irradianceWhm2', color: '#f97316', name: 'Irradiance (Wh/m2)' }
           ]}
           yLabel="Energy / Irradiance"
-        />
-        <TrendChart
-          title="Availability trend"
-          subtitle="Fleet availability for monitored sites."
-          data={aggregateSeries}
-          lines={[{ dataKey: 'availabilityPct', color: '#16a34a', name: 'Availability (%)' }]}
-          yLabel="%"
         />
       </section>
 
@@ -205,15 +184,6 @@ const FleetOverview = () => {
                   <p className="mt-1">
                     Leading the pack at {leadingSite.performanceRatioPct.toFixed(1)} % performance
                     ratio thanks to consistent string alignment.
-                  </p>
-                </li>
-              )}
-              {highestAvailability && (
-                <li className="rounded-xl border border-slate-200/80 bg-slate-50/80 p-4">
-                  <p className="font-semibold text-slate-900">{highestAvailability.name}</p>
-                  <p className="mt-1">
-                    Recorded the best uptime with {highestAvailability.avgAvailabilityPct.toFixed(1)} %
-                    availability and zero downtime in the window.
                   </p>
                 </li>
               )}

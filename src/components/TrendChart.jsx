@@ -15,7 +15,7 @@ import {
   CardTitle
 } from './ui/card.jsx';
 
-const TrendChart = ({ title, subtitle, data, lines, yLabel, actions }) => (
+const TrendChart = ({ title, subtitle, data, lines, yLabel, actions, xKey = 'date' }) => (
   <Card className="h-full bg-white/95 shadow-sm">
     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
       <div>
@@ -30,7 +30,7 @@ const TrendChart = ({ title, subtitle, data, lines, yLabel, actions }) => (
           <LineChart data={data}>
             <CartesianGrid strokeDasharray="4 4" vertical={false} />
             <XAxis
-              dataKey="date"
+              dataKey={xKey}
               stroke="#94a3b8"
               fontSize={12}
               tickLine={false}
@@ -62,6 +62,7 @@ const TrendChart = ({ title, subtitle, data, lines, yLabel, actions }) => (
                 stroke={line.color}
                 strokeWidth={2.5}
                 dot={false}
+                connectNulls
                 name={line.name}
               />
             ))}

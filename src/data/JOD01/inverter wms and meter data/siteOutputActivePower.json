@@ -1,0 +1,163 @@
+[
+  {
+    "timestamp": 1764035999,
+    "value": 16.431,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1764035999
+  },
+  {
+    "timestamp": 1764037799,
+    "value": 137.018,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1764037799
+  },
+  {
+    "timestamp": 1764039599,
+    "value": 363.559,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1764039599
+  },
+  {
+    "timestamp": 1764041399,
+    "value": 657.229,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1764041399
+  },
+  {
+    "timestamp": 1764043199,
+    "value": 974.48,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1764043199
+  },
+  {
+    "timestamp": 1764044999,
+    "value": 1263.653,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1764044999
+  },
+  {
+    "timestamp": 1764046799,
+    "value": 1535.593,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1764046799
+  },
+  {
+    "timestamp": 1764048599,
+    "value": 1776.32,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1764048599
+  },
+  {
+    "timestamp": 1764050399,
+    "value": 1961.374,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1764050399
+  },
+  {
+    "timestamp": 1764052199,
+    "value": 2115.193,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1764052199
+  },
+  {
+    "timestamp": 1764053999,
+    "value": 2157.041,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1764053999
+  },
+  {
+    "timestamp": 1764055799,
+    "value": 2120.816,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1764055799
+  },
+  {
+    "timestamp": 1764057599,
+    "value": 2072.091,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1764057599
+  },
+  {
+    "timestamp": 1764059399,
+    "value": 1919.057,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1764059399
+  },
+  {
+    "timestamp": 1764061199,
+    "value": 1820.75,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1764061199
+  },
+  {
+    "timestamp": 1764062999,
+    "value": 1538.252,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1764062999
+  },
+  {
+    "timestamp": 1764064799,
+    "value": 1298.252,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1764064799
+  },
+  {
+    "timestamp": 1764066599,
+    "value": 1049.835,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1764066599
+  },
+  {
+    "timestamp": 1764068399,
+    "value": 945.199,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1764068399
+  },
+  {
+    "timestamp": 1764070199,
+    "value": 394.854,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1764070199
+  },
+  {
+    "timestamp": 1764071999,
+    "value": 130.355,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1764071999
+  },
+  {
+    "timestamp": 1764073799,
+    "value": 13.549,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1764073799
+  },
+  {
+    "timestamp": 1764075599,
+    "value": 0.556,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1764075599
+  }
+]

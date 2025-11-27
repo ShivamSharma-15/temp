@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  solar-dashboard:
+    build: .
+    container_name: solar-dashboard
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    networks:
+      - npm-network
+
+networks:
+  npm-network:
+    external: true

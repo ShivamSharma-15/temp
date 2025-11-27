@@ -1,37 +1,29 @@
 import { Calendar } from 'lucide-react';
 import { useDashboardStore } from '../store/dashboardStore.js';
-import { Button } from './ui/button.jsx';
-import { cn } from '../lib/utils.js';
-
-const ranges = [
-  { value: '7d', label: '7d' },
-  { value: '30d', label: '30d' },
-  { value: '90d', label: '90d' }
-];
 
 const DateRangeSelector = () => {
-  const dateRange = useDashboardStore((state) => state.dateRange);
-  const setDateRange = useDashboardStore((state) => state.setDateRange);
+  const selectedDate = useDashboardStore((state) => state.selectedDate);
+  const setSelectedDate = useDashboardStore((state) => state.setSelectedDate);
+  const bounds = useDashboardStore((state) => state.dateBounds);
 
   return (
-    <div className="flex items-center gap-1 rounded-full border border-slate-200/80 bg-white/90 px-2 py-1 text-xs shadow-sm">
-      <Calendar className="h-3.5 w-3.5 text-primary" />
-      {ranges.map((range) => (
-        <Button
-          key={range.value}
-          type="button"
-          size="sm"
-          variant="ghost"
-          className={cn(
-            'h-7 rounded-full px-3 text-xs font-semibold text-slate-500 hover:text-slate-900',
-            dateRange === range.value && 'bg-primary text-white hover:bg-primary'
-          )}
-          onClick={() => setDateRange(range.value)}
-        >
-          {range.label}
-        </Button>
-      ))}
-    </div>
+    <label className="flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/90 px-3 py-2 text-xs shadow-sm">
+      <Calendar className="h-4 w-4 text-primary" />
+      <div className="flex flex-col">
+        <span className="text-[11px] font-semibold text-slate-500">Select date</span>
+        <input
+          type="date"
+          className="rounded-md border border-slate-200 px-2 py-1 text-xs text-slate-800 shadow-inner focus:outline-none focus:ring-2 focus:ring-primary/40"
+          value={selectedDate}
+          min={bounds?.min}
+          max={bounds?.max}
+          onChange={(event) => setSelectedDate(event.target.value)}
+        />
+        <span className="text-[10px] text-muted-foreground">
+          Allowed: {bounds?.min} → {bounds?.max}
+        </span>
+      </div>
+    </label>
   );
 };
 

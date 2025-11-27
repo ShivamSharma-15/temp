@@ -1,0 +1,121 @@
+[
+  {
+    "timestamp": 1763603999,
+    "value": 8.74397,
+    "parameter_name": "Performance Ratio",
+    "unit_of_measure": "%",
+    "latest_timestamp": 1763603999
+  },
+  {
+    "timestamp": 1763605799,
+    "value": 36.993901,
+    "parameter_name": "Performance Ratio",
+    "unit_of_measure": "%",
+    "latest_timestamp": 1763605799
+  },
+  {
+    "timestamp": 1763607599,
+    "value": 62.925529,
+    "parameter_name": "Performance Ratio",
+    "unit_of_measure": "%",
+    "latest_timestamp": 1763607599
+  },
+  {
+    "timestamp": 1763609399,
+    "value": 69.748424,
+    "parameter_name": "Performance Ratio",
+    "unit_of_measure": "%",
+    "latest_timestamp": 1763609399
+  },
+  {
+    "timestamp": 1763611199,
+    "value": 75.222911,
+    "parameter_name": "Performance Ratio",
+    "unit_of_measure": "%",
+    "latest_timestamp": 1763611199
+  },
+  {
+    "timestamp": 1763612999,
+    "value": 75.505717,
+    "parameter_name": "Performance Ratio",
+    "unit_of_measure": "%",
+    "latest_timestamp": 1763612999
+  },
+  {
+    "timestamp": 1763614799,
+    "value": 76.597322,
+    "parameter_name": "Performance Ratio",
+    "unit_of_measure": "%",
+    "latest_timestamp": 1763614799
+  },
+  {
+    "timestamp": 1763616599,
+    "value": 83.740305,
+    "parameter_name": "Performance Ratio",
+    "unit_of_measure": "%",
+    "latest_timestamp": 1763616599
+  },
+  {
+    "timestamp": 1763618399,
+    "value": 89.688339,
+    "parameter_name": "Performance Ratio",
+    "unit_of_measure": "%",
+    "latest_timestamp": 1763618399
+  },
+  {
+    "timestamp": 1763620199,
+    "value": 91.920617,
+    "parameter_name": "Performance Ratio",
+    "unit_of_measure": "%",
+    "latest_timestamp": 1763620199
+  },
+  {
+    "timestamp": 1763621999,
+    "value": 95.793826,
+    "parameter_name": "Performance Ratio",
+    "unit_of_measure": "%",
+    "latest_timestamp": 1763621999
+  },
+  {
+    "timestamp": 1763623799,
+    "value": 94.535585,
+    "parameter_name": "Performance Ratio",
+    "unit_of_measure": "%",
+    "latest_timestamp": 1763623799
+  },
+  {
+    "timestamp": 1763625599,
+    "value": 93.015303,
+    "parameter_name": "Performance Ratio",
+    "unit_of_measure": "%",
+    "latest_timestamp": 1763625599
+  },
+  {
+    "timestamp": 1763627399,
+    "value": 88.815761,
+    "parameter_name": "Performance Ratio",
+    "unit_of_measure": "%",
+    "latest_timestamp": 1763627399
+  },
+  {
+    "timestamp": 1763629199,
+    "value": 92.097664,
+    "parameter_name": "Performance Ratio",
+    "unit_of_measure": "%",
+    "latest_timestamp": 1763629199
+  },
+  {
+    "timestamp": 1763630999,
+    "value": 91.717622,
+    "parameter_name": "Performance Ratio",
+    "unit_of_measure": "%",
+    "latest_timestamp": 1763630999
+  },
+  {
+    "timestamp": 1763632799,
+    "value": 97.076401,
+    "parameter_name": "Performance Ratio",
+    "unit_of_measure": "%",
+    "latest_timestamp": 1763632799
+  }
+]

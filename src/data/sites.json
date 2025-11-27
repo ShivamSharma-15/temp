@@ -1,321 +1,98 @@
-[
-  {
-    "description": "PI-25/2600153 2JC8+35C Toorwara, Rajasthan, India",
-    "name": "Abhaneri- ABH01",
-    "owner": null,
-    "phone_number": null,
-    "site_capacity": 5375.0,
-    "site_key": "8fc9e73c70",
-    "type": "solar on grid",
-    "coordinates": ["27.0201875", "76.6153906"],
-    "status": "Partial-ERR"
-  },
-  {
-    "description": "M/s Aditya Infra & EngineeringC_12 Sipcot industrial complexPallapatti Village, taluk, NilakottaiTamil Nadu 624201",
-    "name": "Aditya Infra",
-    "owner": "Mr. Kailash",
-    "phone_number": "7000072044",
-    "site_capacity": 100.8,
-    "site_key": "41a585eda9",
-    "type": "solar on grid",
-    "coordinates": ["10.142794", "77.932989"],
-    "status": "Inactive"
-  },
-  {
-    "description": "(1 Delta- 30KW)_As Steward Morris School New Irans Kota RoadBhilwara (Rajasthan)Pin code 311001",
-    "name": "As Steward Morris School",
-    "owner": "",
-    "phone_number": null,
-    "site_capacity": 30.0,
-    "site_key": "246db135t7",
-    "type": "solar on grid",
-    "coordinates": ["25.356282", "74.649244"],
-    "status": "Inactive"
-  },
-  {
-    "description": "PI-24/2505642 #PO:SCPL-ASA01-5162",
-    "name": "Asadi- ASA01",
-    "owner": "Kush Sharma",
-    "phone_number": "7014605133",
-    "site_capacity": 3402.98,
-    "site_key": "6a11fc90ac",
-    "type": "solar on grid",
-    "coordinates": ["26.0775", "70.7134"],
-    "status": "Partial-ERR"
-  },
-  {
-    "description": "",
-    "name": "Dheeraj Marbles",
-    "owner": "Kartik Mittal",
-    "phone_number": null,
-    "site_capacity": 122.275,
-    "site_key": "eedca92de9",
-    "type": "solar on grid",
-    "coordinates": ["26.6122", "74.8702"],
-    "status": "Active"
-  },
-  {
-    "description": "Evershine Marbles and Exporters pvt. ltd.Makrana Road, MadanganjKishangarh-305801 (Raj.) INDIA",
-    "name": "Evershine Marbles",
-    "owner": "Mr. Jagvir Singh",
-    "phone_number": "8899141455",
-    "site_capacity": 330.19,
-    "site_key": "1bff277d7b",
-    "type": "solar on grid",
-    "coordinates": ["26.6114922", "74.8498924"],
-    "status": "Inactive"
-  },
-  {
-    "description": "PI-25/2600377",
-    "name": "GUL01-Gullana",
-    "owner": null,
-    "phone_number": null,
-    "site_capacity": 1450.0,
-    "site_key": "1e4e0eb789",
-    "type": "solar on grid",
-    "coordinates": ["7.0971", "6.5726"],
-    "status": "On-ERR"
-  },
-  {
-    "description": "",
-    "name": "Gangwal Stonex",
-    "owner": "Manu Singh",
-    "phone_number": null,
-    "site_capacity": 144.675,
-    "site_key": "262e6bc7e6",
-    "type": "solar on grid",
-    "coordinates": ["28.632246", "77.071153"],
-    "status": "Active"
-  },
-  {
-    "description": null,
-    "name": "Gullana",
-    "owner": null,
-    "phone_number": null,
-    "site_capacity": 1300.0,
-    "site_key": "b700d81731",
-    "type": "solar on grid",
-    "coordinates": ["", ""],
-    "status": "Inactive"
-  },
-  {
-    "description": "",
-    "name": "Hotel Jas Vilas",
-    "owner": "",
-    "phone_number": "8302163555",
-    "site_capacity": 28.0,
-    "site_key": "93bbf716b7",
-    "type": "solar on grid",
-    "coordinates": ["26.930349", "75.785822"],
-    "status": "Active"
-  },
-  {
-    "description": "for kusum IP-192.168.31.188",
-    "name": "Indora",
-    "owner": null,
-    "phone_number": null,
-    "site_capacity": 1663.2,
-    "site_key": "7d7fecfe8e",
-    "type": "solar on grid",
-    "coordinates": ["28.632246", "77.071153"],
-    "status": "Active"
-  },
-  {
-    "description": "PI-24/2505386_ip=12.12.12.55 netmask=255.255.255.0 gateway=12.12.12.1 dns=8.8.8.8--9C-95-6E-7B-D2-0E_192.168.0.55",
-    "name": "JOD01",
-    "owner": null,
-    "phone_number": null,
-    "site_capacity": 3357.2,
-    "site_key": "6b809f8b8b",
-    "type": "solar on grid",
-    "coordinates": ["28.632246", "77.071153"],
-    "status": "Active"
-  },
-  {
-    "description": "(SMA Q Solid- 50KW)_M/s Kamakhaya Vyapar Pvt ltd.Plot no-XI-69/2 , MIDC industrial area,hingna road road, Nagpur -440016Maharashtra.",
-    "name": "Kamakhaya Vyapar",
-    "owner": "",
-    "phone_number": null,
-    "site_capacity": 50.0,
-    "site_key": "28adfbd1b4",
-    "type": "solar on grid",
-    "coordinates": ["21.119674", "78.986218"],
-    "status": "Inactive"
-  },
-  {
-    "description": "9C-95-6E-7B-D2-F8 = 192.168.31.152 255.255.255.0 192.168.31.1 8.8.8.8",
-    "name": "Kerli Nadi - 3.159 MW",
-    "owner": "Mr Vikash",
-    "phone_number": null,
-    "site_capacity": 3159.0,
-    "site_key": "2f90f3ec0f",
-    "type": "solar on grid",
-    "coordinates": ["28.632246", "77.071153"],
-    "status": "Partially Active"
-  },
-  {
-    "description": null,
-    "name": "Kusum",
-    "owner": null,
-    "phone_number": null,
-    "site_capacity": null,
-    "site_key": "6edbc0f4ba",
-    "type": "solar on grid",
-    "coordinates": ["", ""],
-    "status": "Inactive"
-  },
-  {
-    "description": "PI-25/2600193",
-    "name": "MNP01- Meenapada",
-    "owner": null,
-    "phone_number": null,
-    "site_capacity": 1968.0,
-    "site_key": "b0aa9906bc",
-    "type": "solar on grid",
-    "coordinates": ["19.2395965", "72.9755861"],
-    "status": "On-ERR"
-  },
-  {
-    "description": "",
-    "name": "Modern Insulators Pvt Ltd",
-    "owner": "Param",
-    "phone_number": "9785051030",
-    "site_capacity": 3004.5,
-    "site_key": "c761ff3b85",
-    "type": "solar on grid",
-    "coordinates": ["24.535901", "72.802064"],
-    "status": "Inactive"
-  },
-  {
-    "description": "(2-SMA Solidq50)_M/s Pitambera Polymers Industries Pvt. Ltd ,B-213, M.I.D.C. Butibori-441122 Nagpur-(Maharasthra)",
-    "name": "Pitambera Polymers Industries",
-    "owner": "Anil",
-    "phone_number": "9821441835",
-    "site_capacity": 100.0,
-    "site_key": "3553f777a5",
-    "type": "solar on grid",
-    "coordinates": ["20.927941", "78.977031"],
-    "status": "Inactive"
-  },
-  {
-    "description": "Poddar Technoplast G-178,RIICO INDUSTRIAL AREA BAGRU JAIPUR ",
-    "name": "Poddar technoplast",
-    "owner": "Himanshu Joshi",
-    "phone_number": "8094751618",
-    "site_capacity": 100.32,
-    "site_key": "d944baff4b",
-    "type": "solar on grid",
-    "coordinates": ["26.803802", "75.556578"],
-    "status": "Inactive"
-  },
-  {
-    "description": "",
-    "name": "RL02",
-    "owner": "",
-    "phone_number": null,
-    "site_capacity": 300.24,
-    "site_key": "22f8b85821",
-    "type": "solar on grid",
-    "coordinates": ["", ""],
-    "status": "Inactive"
-  },
-  {
-    "description": null,
-    "name": "ROHIT POLY",
-    "owner": null,
-    "phone_number": null,
-    "site_capacity": 280.82,
-    "site_key": "5ca5c1212f",
-    "type": "solar on grid",
-    "coordinates": ["", ""],
-    "status": "Active"
-  },
-  {
-    "description": "Royal Suiting, Ajmer road,behind police chowki mandal chouraha bhilwara rajasthan 311026",
-    "name": "Royal Suitings Pvt. Ltd.",
-    "owner": "",
-    "phone_number": "7976349850",
-    "site_capacity": 164.79,
-    "site_key": "9eaec97d58",
-    "type": "solar on grid",
-    "coordinates": ["25.436468", "74.601458"],
-    "status": "Inactive"
-  },
-  {
-    "description": "S.N.Poli Moulds Pvt. Ltd.G187, RIICO Industrial Area, Extn, Bagru, Rajasthan 303007",
-    "name": "SN Poli",
-    "owner": "Mr. Ghanshyam Dubey",
-    "phone_number": null,
-    "site_capacity": 32.04,
-    "site_key": "e2a76f4c32",
-    "type": "solar on grid",
-    "coordinates": ["26.803653", "75.55371099999999"],
-    "status": "Inactive"
-  },
-  {
-    "description": "",
-    "name": "Saraansh Suitings",
-    "owner": "",
-    "phone_number": null,
-    "site_capacity": 200.16,
-    "site_key": "c8d59ecdae",
-    "type": "solar on grid",
-    "coordinates": ["26.8507392", "75.8164469"],
-    "status": "Active"
-  },
-  {
-    "description": "",
-    "name": "Shreenath Synthetics Pvt. Ltd.",
-    "owner": "",
-    "phone_number": "8655584869",
-    "site_capacity": 100.32,
-    "site_key": "a26763657f",
-    "type": "solar on grid",
-    "coordinates": ["25.3198498", "74.5740934"],
-    "status": "Inactive"
-  },
-  {
-    "description": "Suraj synthetic private limited F- 141,142 Riico industrial area pur road, Bhilwara",
-    "name": "Suraj Synthetics",
-    "owner": "Sunil Tangad",
-    "phone_number": null,
-    "site_capacity": 240.3,
-    "site_key": "bf7fd1db8c",
-    "type": "solar on grid",
-    "coordinates": ["25.3184", "74.5914"],
-    "status": "Active"
-  },
-  {
-    "description": "",
-    "name": "Surjeet Marbles",
-    "owner": "Manu Singh",
-    "phone_number": null,
-    "site_capacity": 122.275,
-    "site_key": "85ca2ddbda",
-    "type": "solar on grid",
-    "coordinates": ["26.60704", "74.856"],
-    "status": "Inactive"
-  },
-  {
-    "description": "UMDS Pvt. Ltd Village-Ghaveriya, Post-Gehuli Tehsil- Kotri District-Bhilwara, Rajasthan 311603",
-    "name": "UMDS Pvt. Ltd",
-    "owner": "Vikas",
-    "phone_number": "9571513595",
-    "site_capacity": 2002.0,
-    "site_key": "d9570d4f29",
-    "type": "solar on grid",
-    "coordinates": ["25.4910886", "75.1108374"],
-    "status": "Inactive"
-  },
-  {
-    "description": "PM kusum",
-    "name": "khorandi",
-    "owner": null,
-    "phone_number": null,
-    "site_capacity": 2880.0,
-    "site_key": "9ea5f0314e",
-    "type": "solar on grid",
-    "coordinates": ["", ""],
-    "status": "Partially Active"
-  }
-]
+{
+  "total_count": 8,
+  "page": 1,
+  "sites": [
+    {
+      "description": "PI-25/2600153 2JC8+35C Toorwara, Rajasthan, India",
+      "name": "Abhaneri- ABH01",
+      "owner": null,
+      "phone_number": null,
+      "site_capacity": 5375.0,
+      "site_key": "8fc9e73c70",
+      "type": "solar on grid",
+      "coordinates": ["27.0201875", "76.6153906"],
+      "status": "Partial-ERR"
+    },
+
+    {
+      "description": "PI-24/2505642 #PO:SCPL-ASA01-5162",
+      "name": "Asadi- ASA01",
+      "owner": "Kush Sharma",
+      "phone_number": "7014605133",
+      "site_capacity": 3402.98,
+      "site_key": "6a11fc90ac",
+      "type": "solar on grid",
+      "coordinates": ["26.0775", "70.7134"],
+      "status": "Partial-ERR"
+    },
+
+    {
+      "description": "PI-25/2600377",
+      "name": "GUL01-Gullana",
+      "owner": null,
+      "phone_number": null,
+      "site_capacity": 1450.0,
+      "site_key": "1e4e0eb789",
+      "type": "solar on grid",
+      "coordinates": ["7.0971", "6.5726"],
+      "status": "On-ERR"
+    },
+
+    {
+      "description": "for kusum IP-192.168.31.188",
+      "name": "Indora",
+      "owner": null,
+      "phone_number": null,
+      "site_capacity": 1663.2,
+      "site_key": "7d7fecfe8e",
+      "type": "solar on grid",
+      "coordinates": ["28.632246", "77.071153"],
+      "status": "Active"
+    },
+    {
+      "description": "PI-24/2505386_ip=12.12.12.55 netmask=255.255.255.0 gateway=12.12.12.1 dns=8.8.8.8--9C-95-6E-7B-D2-0E_192.168.0.55",
+      "name": "JOD01",
+      "owner": null,
+      "phone_number": null,
+      "site_capacity": 3357.2,
+      "site_key": "6b809f8b8b",
+      "type": "solar on grid",
+      "coordinates": ["28.632246", "77.071153"],
+      "status": "Active"
+    },
+
+    {
+      "description": "9C-95-6E-7B-D2-F8 = 192.168.31.152 255.255.255.0 192.168.31.1 8.8.8.8",
+      "name": "Kerli Nadi - 3.159 MW",
+      "owner": "Mr Vikash",
+      "phone_number": null,
+      "site_capacity": 3159.0,
+      "site_key": "2f90f3ec0f",
+      "type": "solar on grid",
+      "coordinates": ["28.632246", "77.071153"],
+      "status": "Inactive"
+    },
+    {
+      "description": "PI-25/2600193",
+      "name": "MNP01- Meenapada",
+      "owner": null,
+      "phone_number": null,
+      "site_capacity": 1968.0,
+      "site_key": "b0aa9906bc",
+      "type": "solar on grid",
+      "coordinates": ["19.2395965", "72.9755861"],
+      "status": "On-ERR"
+    },
+    {
+      "description": "PM kusum",
+      "name": "khorandi",
+      "owner": null,
+      "phone_number": null,
+      "site_capacity": 2880.0,
+      "site_key": "9ea5f0314e",
+      "type": "solar on grid",
+      "coordinates": ["", ""],
+      "status": "Partially Active"
+    }
+  ]
+}
