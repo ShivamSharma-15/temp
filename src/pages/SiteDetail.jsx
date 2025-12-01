@@ -872,7 +872,7 @@ const SiteDetail = () => {
           </CardHeader>
           <CardContent>
             <div className="w-full overflow-x-auto">
-              <div className="min-w-[900px]">
+              <div className="min-w-[900px] w-full max-w-[1180px]">
                 <DataTable
                   columns={historyColumns}
                   data={historyTableData}
