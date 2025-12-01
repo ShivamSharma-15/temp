@@ -279,6 +279,17 @@ const SiteDetail = () => {
     [energySeries]
   );
 
+  const last7DailyEnergy = useMemo(
+    () =>
+      fullEnergySeries
+        .slice(-7)
+        .map((entry) => ({
+          date: entry.date,
+          energyMWh: entry.energyMWh ?? 0,
+        })),
+    [fullEnergySeries]
+  );
+
   const lastDaySeries = useMemo(() => {
     if (site.lastDayData?.length) {
       const buckets = new Map();
@@ -425,12 +436,14 @@ const SiteDetail = () => {
         fallback: siteCapacityKw,
       },
       {
-        key: "Output Active Power (kWp)",
-        label: "Output Active Power",
-        suffix: " kWp",
-        precision: 2,
+        key: "Daily Energy (kWh)",
+        label: "Daily Energy",
+        suffix: " kWh",
+        precision: 1,
         icon: Zap,
-        fallback: lastDayChartSeries.at(-1)?.activePowerKwp,
+        fallback:
+          lastDayChartSeries.at(-1)?.energyKwh ??
+          (site.energySeries.at(-1)?.energyMWh ?? 0) * 1000,
       },
       {
         key: "Net Export (kWh)",
@@ -463,7 +476,12 @@ const SiteDetail = () => {
     ];
 
     return definitions.map((definition) => {
-      const rawValue = cardData?.[definition.key] ?? definition.fallback;
+      const rawValue =
+        definition.key === "Daily Energy (kWh)"
+          ? cardData?.[definition.key] ??
+            cardData?.["Output Active Power (kWp)"] ??
+            definition.fallback
+          : cardData?.[definition.key] ?? definition.fallback;
       return {
         label: definition.label,
         value: formatCardValue(
@@ -791,23 +809,84 @@ const SiteDetail = () => {
         />
       </section> */}
 
-      <section className="grid gap-6 lg:grid-cols-2">
+      <section className="grid gap-6">
+        <Card className="shadow-sm">
+          <CardHeader>
+            <CardTitle>Last 7 days energy</CardTitle>
+            <CardDescription>Daily energy trend (independent of selected date).</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="h-[260px] w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <ComposedChart data={last7DailyEnergy}>
+                  <CartesianGrid strokeDasharray="4 4" vertical={false} />
+                  <XAxis
+                    dataKey="date"
+                    stroke="#94a3b8"
+                    fontSize={12}
+                    tickLine={false}
+                    axisLine={false}
+                  />
+                  <YAxis
+                    yAxisId="left"
+                    stroke="#2563eb"
+                    fontSize={12}
+                    tickLine={false}
+                    axisLine={false}
+                    label={{
+                      value: "Energy (MWh)",
+                      angle: -90,
+                      position: "insideLeft",
+                      style: { fill: "#2563eb", fontSize: 12 },
+                    }}
+                  />
+                  <Tooltip
+                    contentStyle={{
+                      borderRadius: "12px",
+                      borderColor: "#e2e8f0",
+                    }}
+                    formatter={(value, name) => [
+                      `${Number(value ?? 0).toFixed(2)} MWh`,
+                      name,
+                    ]}
+                  />
+                  <Bar
+                    yAxisId="left"
+                    dataKey="energyMWh"
+                    name="Daily Energy (MWh)"
+                    fill="#2563eb"
+                    radius={[6, 6, 0, 0]}
+                  />
+                </ComposedChart>
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="grid gap-6">
         <Card className="shadow-sm">
           <CardHeader>
             <CardTitle>Historic daily aggregates</CardTitle>
             <CardDescription>Production and irradiance.</CardDescription>
           </CardHeader>
           <CardContent>
-            <DataTable
-              columns={historyColumns}
-              data={historyTableData}
-              searchKey="date"
-              initialPageSize={7}
-              emptyState="No historic entries for this range."
-            />
+            <div className="w-full overflow-x-auto">
+              <div className="min-w-[900px]">
+                <DataTable
+                  columns={historyColumns}
+                  data={historyTableData}
+                  searchKey="date"
+                  initialPageSize={7}
+                  emptyState="No historic entries for this range."
+                />
+              </div>
+            </div>
           </CardContent>
         </Card>
+      </section>
 
+      <section className="grid gap-6 lg:grid-cols-2">
         <Card className="shadow-sm">
           <CardHeader>
             <CardTitle>Unit overview</CardTitle>
@@ -823,9 +902,7 @@ const SiteDetail = () => {
             />
           </CardContent>
         </Card>
-      </section>
 
-      <section className="grid gap-6 lg:grid-cols-2">
         <Card className="shadow-sm">
           <CardHeader>
             <CardTitle>Unit readiness</CardTitle>
@@ -843,29 +920,6 @@ const SiteDetail = () => {
                 </p>
               </div>
             ))}
-          </CardContent>
-        </Card>
-
-        <Card className="shadow-sm">
-          <CardHeader>
-            <CardTitle>Maintenance narratives</CardTitle>
-            <CardDescription>Quick context for operators.</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-3 text-sm text-slate-600">
-            <div className="rounded-2xl border border-slate-200/70 bg-slate-50/70 p-4">
-              <p className="font-semibold text-slate-900">Focus next</p>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Align tracker rows B12-B15 before the afternoon ramp. Crew
-                already dispatched.
-              </p>
-            </div>
-            <div className="rounded-2xl border border-slate-200/70 bg-slate-50/70 p-4">
-              <p className="font-semibold text-slate-900">Weather window</p>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Calm winds expected for the next 36 hours -- plan inverter
-                restarts during this slot.
-              </p>
-            </div>
           </CardContent>
         </Card>
       </section>
