@@ -1,4 +1,22 @@
-import { Activity, BatteryCharging, Gauge, ShieldAlert } from 'lucide-react';
+import {
+  ArrowDownCircle,
+  ArrowUpCircle,
+  Leaf,
+  Power,
+  ShieldAlert,
+  Wind,
+  Zap
+} from 'lucide-react';
+import { useMemo, useState } from 'react';
+import {
+  CartesianGrid,
+  ComposedChart,
+  Line,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis
+} from 'recharts';
 import StatCard from '../components/StatCard.jsx';
 import TrendChart from '../components/TrendChart.jsx';
 import { useDashboardStore } from '../store/dashboardStore.js';
@@ -42,6 +60,7 @@ const FleetOverview = () => {
     selectedDate: state.selectedDate,
     fleetBenchmarks: state.fleetBenchmarks
   }));
+  const [metric, setMetric] = useState('power');
 
   if (!user) {
     return null;
@@ -51,6 +70,21 @@ const FleetOverview = () => {
   const windowSize = 7;
 
   const aggregateSeriesMap = new Map();
+  const perSiteLatest = accessibleSites.map((site) => {
+    const latestEnergy = site.energySeries.at(-1)?.energyMWh ?? 0;
+    const prevEnergy =
+      site.energySeries.length > 1 ? site.energySeries.at(-2).energyMWh : null;
+    return {
+      site,
+      latestEnergy,
+      prevEnergy
+    };
+  });
+
+  const totalCapacityKw = accessibleSites.reduce(
+    (sum, site) => sum + (site.capacityMw ?? 0) * 1000,
+    0
+  );
 
   accessibleSites.forEach((site) => {
     const slice = site.energySeries.slice(-windowSize);
@@ -76,7 +110,7 @@ const FleetOverview = () => {
     }));
 
   const totalCapacityMw = accessibleSites.reduce((sum, site) => sum + site.capacityMw, 0);
-  const totalEnergyMWh = aggregateSeries.reduce((sum, point) => sum + point.energyMWh, 0);
+  const totalEnergyMWh = perSiteLatest.reduce((sum, item) => sum + item.latestEnergy, 0);
   const performanceRatio = accessibleSites.length
     ? accessibleSites.reduce((sum, site) => sum + site.performanceRatioPct, 0) /
       accessibleSites.length
@@ -94,9 +128,10 @@ const FleetOverview = () => {
     0
   );
 
-  const lastPoint = aggregateSeries.at(-1);
-  const prevPoint = aggregateSeries.at(-2);
-  const energyDelta = lastPoint && prevPoint ? lastPoint.energyMWh - prevPoint.energyMWh : 0;
+  const energyDelta = perSiteLatest.reduce((sum, item) => {
+    const delta = item.prevEnergy == null ? 0 : item.latestEnergy - item.prevEnergy;
+    return sum + delta;
+  }, 0);
 
   const leadingSite =
     accessibleSites.length > 0
@@ -116,45 +151,365 @@ const FleetOverview = () => {
     .sort((a, b) => b.latestEnergy - a.latestEnergy)
     .slice(0, 3);
 
+  const resolveCardDate = (site) => {
+    const available = site.availableCardDates ?? [];
+    if (!available.length) return null;
+    const sorted = [...available].sort();
+    const target = selectedDate ?? sorted.at(-1);
+    const eligible = sorted.filter((date) => date <= target);
+    return eligible.at(-1) ?? sorted.at(-1);
+  };
+
+  const aggregatedCards = (() => {
+    const accumulator = {
+      capacityKw: 0,
+      outputKw: 0,
+      netExport: 0,
+      netImport: 0,
+      specificYield: [],
+      cuf: []
+    };
+
+    accessibleSites.forEach((site) => {
+      accumulator.capacityKw += (site.capacityMw ?? 0) * 1000;
+
+      const resolvedDate = resolveCardDate(site);
+      const siteCard = resolvedDate ? site.cardsByDate?.[resolvedDate] ?? {} : {};
+      const output = siteCard['Output Active Power (kWp)'];
+      const specYield = siteCard['Specific Yield (kWh/kWp)'];
+      const cuf = siteCard['CUF (%)'];
+      const netExp = siteCard['Net Export (kWh)'];
+      const netImp = siteCard['Net Import (kWh)'];
+
+      if (Number.isFinite(output)) accumulator.outputKw += output;
+      if (Number.isFinite(netExp)) accumulator.netExport += netExp;
+      if (Number.isFinite(netImp)) accumulator.netImport += netImp;
+      if (Number.isFinite(specYield)) accumulator.specificYield.push(specYield);
+      if (Number.isFinite(cuf)) accumulator.cuf.push(cuf);
+    });
+
+    const avg = (arr) => (arr.length ? arr.reduce((s, v) => s + v, 0) / arr.length : null);
+
+    return {
+      'Site Capacity (kWp)': accumulator.capacityKw,
+      'Output Active Power (kWp)': accumulator.outputKw,
+      'Net Export (kWh)': accumulator.netExport || null,
+      'Net Import (kWh)': accumulator.netImport || null,
+      'Specific Yield (kWh/kWp)': avg(accumulator.specificYield),
+      'CUF (%)': avg(accumulator.cuf)
+    };
+  })();
+
+  const aggregatedLastDaySeries = useMemo(() => {
+    const map = new Map();
+    const normalizeTimestamp = (ts) => Math.round(ts / 60) * 60;
+    accessibleSites.forEach((site) => {
+      (site.lastDayData ?? []).forEach((entry) => {
+        if (entry?.timestamp == null) return;
+        const ts = normalizeTimestamp(entry.timestamp);
+        const bucket = map.get(ts) ?? {
+          timestamp: ts,
+          time: new Date(ts * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          activePower: 0,
+          solarIrradiation: 0,
+          dailyEnergy: 0,
+          hasPower: false,
+          hasIrradiation: false,
+          hasEnergy: false
+        };
+        if (entry.activePower != null || entry.value != null || entry.parameter_name === 'Output Active Power') {
+          const value = entry.activePower ?? entry.value ?? 0;
+          bucket.activePower += value;
+          bucket.hasPower = true;
+        }
+        if (entry.solarIrradiation != null || entry.parameter_name === 'Solar Irradiation') {
+          const value = entry.solarIrradiation ?? entry.value ?? 0;
+          bucket.solarIrradiation += value;
+          bucket.hasIrradiation = true;
+        }
+        if (entry.dailyEnergy != null || entry.parameter_name === 'Daily Energy') {
+          const value = entry.dailyEnergy ?? entry.value ?? 0;
+          bucket.dailyEnergy += value;
+          bucket.hasEnergy = true;
+        }
+        map.set(ts, bucket);
+      });
+    });
+
+    const result = Array.from(map.values()).sort((a, b) => a.timestamp - b.timestamp);
+    return result.map((entry) => {
+      const prPct =
+        entry.hasPower && entry.hasIrradiation && entry.solarIrradiation > 0 && totalCapacityKw > 0
+          ? (entry.activePower * 1000 * 100) / (totalCapacityKw * entry.solarIrradiation)
+          : null;
+      return {
+        ...entry,
+        activePowerKwp: entry.hasPower ? entry.activePower : null,
+        energyKwh: entry.hasEnergy ? entry.dailyEnergy : null,
+        prPct
+      };
+    });
+  }, [accessibleSites, totalCapacityKw]);
+
+  const aggregatedDailyChartSeries = useMemo(
+    () =>
+      aggregateSeries.map((entry) => ({
+        date: entry.date,
+        energyKwh: entry.energyMWh * 1000,
+        irradiationKwhm2: entry.irradianceWhm2 / 1000
+      })),
+    [aggregateSeries]
+  );
+
+  const hasIntraday = aggregatedLastDaySeries.length > 0;
+  const useIntraday = hasIntraday;
+  const chartData = useIntraday ? aggregatedLastDaySeries : aggregatedDailyChartSeries;
+  const xKey = useIntraday ? 'time' : 'date';
+  const selectedMetric = useIntraday ? metric : 'energy';
+  const lineSeries = useMemo(() => {
+    if (selectedMetric === 'irradiation') {
+      return [
+        {
+          key: useIntraday ? 'solarIrradiation' : 'irradiationKwhm2',
+          name: useIntraday ? 'Solar Irradiation (W/m2)' : 'Irradiation (kWh/m2)',
+          color: '#f97316'
+        }
+      ];
+    }
+    if (selectedMetric === 'energy') {
+      return [{ key: 'energyKwh', name: 'Daily Energy (kWh)', color: '#2563eb' }];
+    }
+    if (selectedMetric === 'pr') {
+      return [{ key: 'prPct', name: 'PR (%)', color: '#10b981' }];
+    }
+    return [
+      {
+        key: 'activePowerKwp',
+        name: 'Output Active Power (kW)',
+        color: '#2563eb'
+      }
+    ];
+  }, [selectedMetric, useIntraday]);
+
+  const yLabel = useMemo(() => {
+    switch (selectedMetric) {
+      case 'irradiation':
+        return useIntraday ? 'W/m2' : 'kWh/m2';
+      case 'energy':
+        return 'Energy (kWh)';
+      case 'pr':
+        return 'PR (%)';
+      default:
+        return 'Power (kW)';
+    }
+  }, [selectedMetric, useIntraday]);
+
+  const dailyCards = useMemo(() => {
+    const definitions = [
+      {
+        key: 'Site Capacity (kWp)',
+        label: 'Site Capacity',
+        suffix: ' kWp',
+        precision: 2,
+        icon: Power,
+        fallback: totalCapacityKw
+      },
+      {
+        key: 'Output Active Power (kWp)',
+        label: 'Output Active Power',
+        suffix: ' kWp',
+        precision: 2,
+        icon: Zap,
+        fallback: aggregatedLastDaySeries.at(-1)?.activePowerKwp
+      },
+      {
+        key: 'Net Export (kWh)',
+        label: 'Net Export',
+        suffix: ' kWh',
+        precision: 1,
+        icon: ArrowUpCircle
+      },
+      {
+        key: 'Net Import (kWh)',
+        label: 'Net Import',
+        suffix: ' kWh',
+        precision: 1,
+        icon: ArrowDownCircle
+      },
+      {
+        key: 'Specific Yield (kWh/kWp)',
+        label: 'Specific Yield',
+        suffix: ' kWh/kWp',
+        precision: 2,
+        icon: Leaf
+      },
+      {
+        key: 'CUF (%)',
+        label: 'CUF (%)',
+        suffix: ' %',
+        precision: 2,
+        icon: Wind
+      }
+    ];
+
+    const formatCardValue = (value, suffix = '', precision = 2) => {
+      if (value === undefined || value === null || value === '') return '-';
+      if (typeof value === 'number') {
+        if (!Number.isFinite(value)) return '-';
+        return `${value.toLocaleString(undefined, {
+          minimumFractionDigits: precision,
+          maximumFractionDigits: precision
+        })}${suffix}`;
+      }
+      return `${value}${suffix}`;
+    };
+
+    return definitions.map((definition) => {
+      const rawValue = aggregatedCards[definition.key] ?? definition.fallback;
+      return {
+        label: definition.label,
+        value: formatCardValue(rawValue, definition.suffix, definition.precision),
+        icon: definition.icon
+      };
+    });
+  }, [aggregatedCards, aggregatedLastDaySeries, totalCapacityKw]);
+
   return (
     <div className="space-y-6">
-      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <StatCard
-          label="Active fleet capacity"
-          value={`${totalCapacityMw.toFixed(1)} MW`}
-          hint={`Benchmark: ${fleetBenchmarks.totalCapacityMw.toFixed(1)} MW portfolio`}
-          icon={BatteryCharging}
-        />
-        <StatCard
-          label="Energy delivered"
-          value={`${Math.round(totalEnergyMWh)} MWh`}
-          delta={{
-            trend: energyDelta >= 0 ? 'positive' : 'negative',
-            text: `${energyDelta >= 0 ? '+' : ''}${energyDelta.toFixed(1)} MWh day over day`
-          }}
-          hint={`Date: ${selectedDate}`}
-          icon={Activity}
-        />
-        <StatCard
-          label="Performance ratio"
-          value={`${performanceRatio.toFixed(1)} %`}
-          delta={{
-            trend: performanceRatio >= fleetBenchmarks.averagePerformanceRatio ? 'positive' : 'negative',
-            text: `Fleet avg ${fleetBenchmarks.averagePerformanceRatio} %`
-          }}
-          hint="Higher is better"
-          icon={Gauge}
-        />
-        <StatCard
-          label="System health"
-          value={`${onlineUnits} online / ${offlineUnits} attention`}
-          delta={{
-            trend: openAlarms > 0 ? 'negative' : 'positive',
-            text: `${openAlarms} open alarm${openAlarms === 1 ? '' : 's'}`
-          }}
-          hint="Monitoring inverters, meters, weather stations"
-          icon={ShieldAlert}
-        />
+      <section className="space-y-2">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <p className="text-sm font-semibold text-slate-800">Fleet snapshot</p>
+          {selectedDate && (
+            <p className="text-xs text-muted-foreground">Data for {selectedDate}</p>
+          )}
+        </div>
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+          {dailyCards.map((card) => (
+            <StatCard key={card.label} label={card.label} value={card.value} icon={card.icon} />
+          ))}
+        </div>
+      </section>
+
+      <section className="grid gap-6 lg:grid-cols-[2fr,1fr]">
+        <Card className="shadow-sm">
+          <CardHeader>
+            <CardTitle className="mb-3">
+              {selectedMetric === 'power'
+                ? 'Output Active Power'
+                : selectedMetric === 'irradiation'
+                ? 'Solar Irradiation'
+                : selectedMetric === 'energy'
+                ? 'Daily Energy'
+                : 'Performance Ratio (%)'}
+            </CardTitle>
+            <CardDescription className="text-xs text-muted-foreground">
+              Aggregated across accessible sites
+            </CardDescription>
+
+            {useIntraday && (
+              <div className="mt-3 flex items-center gap-2">
+                <label className="text-xs text-muted-foreground" htmlFor="metric-select">
+                  Series
+                </label>
+                <select
+                  id="metric-select"
+                  className="rounded-md border border-slate-200 bg-white px-2 py-1 text-xs"
+                  value={metric}
+                  onChange={(e) => setMetric(e.target.value)}
+                >
+                  <option value="power">Output Active Power</option>
+                  <option value="irradiation">Solar Irradiation</option>
+                  <option value="energy">Daily Energy</option>
+                  <option value="pr">PR (%)</option>
+                </select>
+              </div>
+            )}
+          </CardHeader>
+          <CardContent>
+            <div className="h-[320px] w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <ComposedChart data={chartData}>
+                  <CartesianGrid strokeDasharray="4 4" vertical={false} />
+                  <XAxis
+                    dataKey={xKey}
+                    stroke="#94a3b8"
+                    fontSize={12}
+                    tickLine={false}
+                    axisLine={false}
+                  />
+                  <YAxis
+                    yAxisId="left"
+                    stroke="#2563eb"
+                    fontSize={12}
+                    tickLine={false}
+                    axisLine={false}
+                    label={{
+                      value: yLabel,
+                      angle: -90,
+                      position: 'insideLeft',
+                      style: { fill: '#2563eb', fontSize: 12 }
+                    }}
+                  />
+                  <Tooltip
+                    contentStyle={{
+                      borderRadius: '12px',
+                      borderColor: '#e2e8f0'
+                    }}
+                    formatter={(value, name) => {
+                      if (name.includes('Power')) {
+                        return [`${value?.toFixed?.(1) ?? value} kW`, name];
+                      }
+                      if (name.includes('Energy')) {
+                        return [`${value?.toFixed?.(1) ?? value} kWh`, name];
+                      }
+                      if (name.includes('Irradiation')) {
+                        return [`${value?.toFixed?.(1) ?? value} W/m2`, name];
+                      }
+                      if (name.includes('PR')) {
+                        return [`${value?.toFixed?.(2) ?? value} %`, name];
+                      }
+                      return [value, name];
+                    }}
+                  />
+                  {lineSeries.map((line) => (
+                    <Line
+                      key={line.key}
+                      yAxisId="left"
+                      type="monotone"
+                      dataKey={line.key}
+                      name={line.name}
+                      stroke={line.color}
+                      strokeWidth={2.5}
+                      dot={false}
+                      connectNulls
+                      strokeDasharray={line.strokeDasharray}
+                    />
+                  ))}
+                </ComposedChart>
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
+        <Card className="bg-gradient-to-b from-sky-50 to-white shadow-sm">
+          <CardHeader>
+            <CardTitle>System health</CardTitle>
+            <CardDescription>Live fleet readiness.</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <StatCard
+              label="Units online"
+              value={`${onlineUnits}`}
+              icon={ShieldAlert}
+              hint={`${offlineUnits} need attention`}
+            />
+            <StatCard
+              label="Open alarms"
+              value={`${openAlarms}`}
+              icon={ShieldAlert}
+              hint="Unresolved across fleet"
+            />
+          </CardContent>
+        </Card>
       </section>
 
       <section className="grid gap-6">

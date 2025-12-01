@@ -1,5 +1,82 @@
 [
   {
+    "timestamp": 1763839799,
+    "value": 0.0,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763839799
+  },
+  {
+    "timestamp": 1763841599,
+    "value": 0.0,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763841599
+  },
+  {
+    "timestamp": 1763843399,
+    "value": 0.0,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763843399
+  },
+  {
+    "timestamp": 1763845199,
+    "value": 0.0,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763845199
+  },
+  {
+    "timestamp": 1763846999,
+    "value": 0.0,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763846999
+  },
+  {
+    "timestamp": 1763848799,
+    "value": 0.0,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763848799
+  },
+  {
+    "timestamp": 1763850599,
+    "value": 0.0,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763850599
+  },
+  {
+    "timestamp": 1763852399,
+    "value": 0.0,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763852399
+  },
+  {
+    "timestamp": 1763854199,
+    "value": 0.0,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763854199
+  },
+  {
+    "timestamp": 1763855999,
+    "value": 0.0,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763855999
+  },
+  {
+    "timestamp": 1763857799,
+    "value": 0.0,
+    "parameter_name": "Output Active Power",
+    "unit_of_measure": "kWp",
+    "latest_timestamp": 1763857799
+  },
+  {
     "timestamp": 1763859599,
     "value": 0.0,
     "parameter_name": "Output Active Power",
@@ -15,161 +92,161 @@
   },
   {
     "timestamp": 1763863199,
-    "value": 24.477,
+    "value": 96.915,
     "parameter_name": "Output Active Power",
     "unit_of_measure": "kWp",
     "latest_timestamp": 1763863199
   },
   {
     "timestamp": 1763864999,
-    "value": 184.722,
+    "value": 309.131,
     "parameter_name": "Output Active Power",
     "unit_of_measure": "kWp",
     "latest_timestamp": 1763864999
   },
   {
     "timestamp": 1763866799,
-    "value": 495.535,
+    "value": 615.923,
     "parameter_name": "Output Active Power",
     "unit_of_measure": "kWp",
     "latest_timestamp": 1763866799
   },
   {
     "timestamp": 1763868599,
-    "value": 836.179,
+    "value": 976.395,
     "parameter_name": "Output Active Power",
     "unit_of_measure": "kWp",
     "latest_timestamp": 1763868599
   },
   {
     "timestamp": 1763870399,
-    "value": 1191.516,
+    "value": 1283.706,
     "parameter_name": "Output Active Power",
     "unit_of_measure": "kWp",
     "latest_timestamp": 1763870399
   },
   {
     "timestamp": 1763872199,
-    "value": 1518.672,
+    "value": 1556.789,
     "parameter_name": "Output Active Power",
     "unit_of_measure": "kWp",
     "latest_timestamp": 1763872199
   },
   {
     "timestamp": 1763873999,
-    "value": 1766.605,
+    "value": 1765.968,
     "parameter_name": "Output Active Power",
     "unit_of_measure": "kWp",
     "latest_timestamp": 1763873999
   },
   {
     "timestamp": 1763875799,
-    "value": 1978.469,
+    "value": 1946.321,
     "parameter_name": "Output Active Power",
     "unit_of_measure": "kWp",
     "latest_timestamp": 1763875799
   },
   {
     "timestamp": 1763877599,
-    "value": 2114.212,
+    "value": 2035.891,
     "parameter_name": "Output Active Power",
     "unit_of_measure": "kWp",
     "latest_timestamp": 1763877599
   },
   {
     "timestamp": 1763879399,
-    "value": 2242.108,
+    "value": 2077.029,
     "parameter_name": "Output Active Power",
     "unit_of_measure": "kWp",
     "latest_timestamp": 1763879399
   },
   {
     "timestamp": 1763881199,
-    "value": 2321.19,
+    "value": 2039.243,
     "parameter_name": "Output Active Power",
     "unit_of_measure": "kWp",
     "latest_timestamp": 1763881199
   },
   {
     "timestamp": 1763882999,
-    "value": 2215.056,
+    "value": 2009.258,
     "parameter_name": "Output Active Power",
     "unit_of_measure": "kWp",
     "latest_timestamp": 1763882999
   },
   {
     "timestamp": 1763884799,
-    "value": 2170.541,
+    "value": 1793.527,
     "parameter_name": "Output Active Power",
     "unit_of_measure": "kWp",
     "latest_timestamp": 1763884799
   },
   {
     "timestamp": 1763886599,
-    "value": 2112.378,
+    "value": 1656.509,
     "parameter_name": "Output Active Power",
     "unit_of_measure": "kWp",
     "latest_timestamp": 1763886599
   },
   {
     "timestamp": 1763888399,
-    "value": 2006.758,
+    "value": 1461.444,
     "parameter_name": "Output Active Power",
     "unit_of_measure": "kWp",
     "latest_timestamp": 1763888399
   },
   {
     "timestamp": 1763890199,
-    "value": 1797.328,
+    "value": 1318.979,
     "parameter_name": "Output Active Power",
     "unit_of_measure": "kWp",
     "latest_timestamp": 1763890199
   },
   {
     "timestamp": 1763891999,
-    "value": 1540.684,
+    "value": 1032.692,
     "parameter_name": "Output Active Power",
     "unit_of_measure": "kWp",
     "latest_timestamp": 1763891999
   },
   {
     "timestamp": 1763893799,
-    "value": 1252.283,
+    "value": 714.208,
     "parameter_name": "Output Active Power",
     "unit_of_measure": "kWp",
     "latest_timestamp": 1763893799
   },
   {
     "timestamp": 1763895599,
-    "value": 890.933,
+    "value": 405.527,
     "parameter_name": "Output Active Power",
     "unit_of_measure": "kWp",
     "latest_timestamp": 1763895599
   },
   {
     "timestamp": 1763897399,
-    "value": 494.915,
+    "value": 168.697,
     "parameter_name": "Output Active Power",
     "unit_of_measure": "kWp",
     "latest_timestamp": 1763897399
   },
   {
     "timestamp": 1763899199,
-    "value": 159.294,
+    "value": 28.786,
     "parameter_name": "Output Active Power",
     "unit_of_measure": "kWp",
     "latest_timestamp": 1763899199
   },
   {
     "timestamp": 1763900999,
-    "value": 15.024,
+    "value": 0.691,
     "parameter_name": "Output Active Power",
     "unit_of_measure": "kWp",
     "latest_timestamp": 1763900999
   },
   {
     "timestamp": 1763902799,
-    "value": 0.646,
+    "value": 0.0,
     "parameter_name": "Output Active Power",
     "unit_of_measure": "kWp",
     "latest_timestamp": 1763902799

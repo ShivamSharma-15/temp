@@ -50,8 +50,7 @@ const Sidebar = () => {
   const accessibleSites = useMemo(() => {
     if (!user) return [];
     return sites
-      .filter((site) => user.accessibleSiteIds.includes(site.id))
-      .sort((a, b) => a.name.localeCompare(b.name));
+      .filter((site) => user.accessibleSiteIds.includes(site.id));
   }, [sites, user]);
 
   if (!user) return null;

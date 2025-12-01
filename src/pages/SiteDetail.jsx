@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import {
-  Gauge,
+  ArrowDownCircle,
+  ArrowUpCircle,
   Leaf,
   MapPin,
   Power,
@@ -389,18 +390,6 @@ const SiteDetail = () => {
     [lastDaySeries, siteCapacityKw]
   );
 
-  const averagePrToday = useMemo(() => {
-    const valid = lastDayChartSeries.filter((entry) => entry.prPct > 0);
-    if (valid.length) {
-      const avg =
-        valid.reduce((sum, entry) => sum + entry.prPct, 0) / valid.length;
-      return avg;
-    }
-    const latestDaily = dailyChartSeries.at(-1);
-    if (latestDaily?.performanceRatioPct == null) return null;
-    return latestDaily.performanceRatioPct;
-  }, [lastDayChartSeries, dailyChartSeries]);
-
   const availableCardDates = site.availableCardDates ?? [];
   const cardsByDate = site.cardsByDate ?? {};
   const resolvedCardDate = useMemo(() => {
@@ -444,12 +433,18 @@ const SiteDetail = () => {
         fallback: lastDayChartSeries.at(-1)?.activePowerKwp,
       },
       {
-        key: "PR (%)",
-        label: "PR (%)",
-        suffix: " %",
-        precision: 2,
-        icon: Gauge,
-        fallback: averagePrToday,
+        key: "Net Export (kWh)",
+        label: "Net Export",
+        suffix: " kWh",
+        precision: 1,
+        icon: ArrowUpCircle,
+      },
+      {
+        key: "Net Import (kWh)",
+        label: "Net Import",
+        suffix: " kWh",
+        precision: 1,
+        icon: ArrowDownCircle,
       },
       {
         key: "Specific Yield (kWh/kWp)",
@@ -479,7 +474,7 @@ const SiteDetail = () => {
         icon: definition.icon,
       };
     });
-  }, [averagePrToday, cardData, lastDayChartSeries, siteCapacityKw]);
+  }, [cardData, lastDayChartSeries, siteCapacityKw]);
 
   const [metric, setMetric] = useState("power");
 

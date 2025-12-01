@@ -1,7 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import AppShell from './components/AppShell.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
-import LoginPage from './pages/LoginPage.jsx';
 import FleetOverview from './pages/FleetOverview.jsx';
 import SiteDetail from './pages/SiteDetail.jsx';
 import AlarmHub from './pages/AlarmHub.jsx';
@@ -10,13 +9,12 @@ import { useDashboardStore } from './store/dashboardStore.js';
 
 const RootRedirect = () => {
   const user = useDashboardStore((state) => state.user);
-  return user ? <Navigate to="/app" replace /> : <Navigate to="/login" replace />;
+  return user ? <Navigate to="/app" replace /> : <Navigate to="/app" replace />;
 };
 
 const App = () => (
   <Routes>
     <Route path="/" element={<RootRedirect />} />
-    <Route path="/login" element={<LoginPage />} />
     <Route element={<ProtectedRoute />}>
       <Route path="/app" element={<AppShell />}>
         <Route index element={<FleetOverview />} />

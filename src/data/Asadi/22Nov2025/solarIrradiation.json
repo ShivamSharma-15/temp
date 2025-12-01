@@ -1,0 +1,338 @@
+[
+  {
+    "timestamp": 1763751599,
+    "value": 7.2,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763751599
+  },
+  {
+    "timestamp": 1763753399,
+    "value": 0.0,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763753399
+  },
+  {
+    "timestamp": 1763755199,
+    "value": 0.0,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763755199
+  },
+  {
+    "timestamp": 1763756999,
+    "value": 0.0,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763756999
+  },
+  {
+    "timestamp": 1763758799,
+    "value": 0.0,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763758799
+  },
+  {
+    "timestamp": 1763760599,
+    "value": 0.0,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763760599
+  },
+  {
+    "timestamp": 1763762399,
+    "value": 7.2,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763762399
+  },
+  {
+    "timestamp": 1763764199,
+    "value": 7.2,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763764199
+  },
+  {
+    "timestamp": 1763765999,
+    "value": 7.2,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763765999
+  },
+  {
+    "timestamp": 1763767799,
+    "value": 7.2,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763767799
+  },
+  {
+    "timestamp": 1763769599,
+    "value": 7.2,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763769599
+  },
+  {
+    "timestamp": 1763771399,
+    "value": 7.2,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763771399
+  },
+  {
+    "timestamp": 1763773199,
+    "value": 7.2,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763773199
+  },
+  {
+    "timestamp": 1763774999,
+    "value": 10.8,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763774999
+  },
+  {
+    "timestamp": 1763776799,
+    "value": 43.2,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763776799
+  },
+  {
+    "timestamp": 1763778599,
+    "value": 126.0,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763778599
+  },
+  {
+    "timestamp": 1763780399,
+    "value": 226.8,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763780399
+  },
+  {
+    "timestamp": 1763782199,
+    "value": 352.8,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763782199
+  },
+  {
+    "timestamp": 1763783999,
+    "value": 475.2,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763783999
+  },
+  {
+    "timestamp": 1763785799,
+    "value": 572.4,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763785799
+  },
+  {
+    "timestamp": 1763787599,
+    "value": 655.2,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763787599
+  },
+  {
+    "timestamp": 1763789399,
+    "value": 716.4,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763789399
+  },
+  {
+    "timestamp": 1763791199,
+    "value": 716.4,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763791199
+  },
+  {
+    "timestamp": 1763792999,
+    "value": 723.6,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763792999
+  },
+  {
+    "timestamp": 1763794799,
+    "value": 716.4,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763794799
+  },
+  {
+    "timestamp": 1763796599,
+    "value": 691.2,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763796599
+  },
+  {
+    "timestamp": 1763798399,
+    "value": 720.0,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763798399
+  },
+  {
+    "timestamp": 1763800199,
+    "value": 644.4,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763800199
+  },
+  {
+    "timestamp": 1763801999,
+    "value": 637.2,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763801999
+  },
+  {
+    "timestamp": 1763803799,
+    "value": 514.8,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763803799
+  },
+  {
+    "timestamp": 1763805599,
+    "value": 370.8,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763805599
+  },
+  {
+    "timestamp": 1763807399,
+    "value": 280.8,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763807399
+  },
+  {
+    "timestamp": 1763809199,
+    "value": 172.8,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763809199
+  },
+  {
+    "timestamp": 1763810999,
+    "value": 75.6,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763810999
+  },
+  {
+    "timestamp": 1763812799,
+    "value": 18.0,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763812799
+  },
+  {
+    "timestamp": 1763814599,
+    "value": 7.2,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763814599
+  },
+  {
+    "timestamp": 1763816399,
+    "value": 0.0,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763816399
+  },
+  {
+    "timestamp": 1763818199,
+    "value": 0.0,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763818199
+  },
+  {
+    "timestamp": 1763819999,
+    "value": 0.0,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763819999
+  },
+  {
+    "timestamp": 1763821799,
+    "value": 0.0,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763821799
+  },
+  {
+    "timestamp": 1763823599,
+    "value": 7.2,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763823599
+  },
+  {
+    "timestamp": 1763825399,
+    "value": 0.0,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763825399
+  },
+  {
+    "timestamp": 1763827199,
+    "value": 7.2,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763827199
+  },
+  {
+    "timestamp": 1763828999,
+    "value": 0.0,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763828999
+  },
+  {
+    "timestamp": 1763830799,
+    "value": 0.0,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763830799
+  },
+  {
+    "timestamp": 1763832599,
+    "value": 7.2,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763832599
+  },
+  {
+    "timestamp": 1763834399,
+    "value": 0.0,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763834399
+  },
+  {
+    "timestamp": 1763836199,
+    "value": 0.0,
+    "parameter_name": "Solar Irradiation",
+    "unit_of_measure": "W/m2",
+    "latest_timestamp": 1763836199
+  }
+]

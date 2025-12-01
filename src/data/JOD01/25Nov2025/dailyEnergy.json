@@ -1,0 +1,331 @@
+[
+  {
+    "timestamp": 1764012599,
+    "value": 0.0,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764012599
+  },
+  {
+    "timestamp": 1764014399,
+    "value": 0.0,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764014399
+  },
+  {
+    "timestamp": 1764016199,
+    "value": 0.0,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764016199
+  },
+  {
+    "timestamp": 1764017999,
+    "value": 0.0,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764017999
+  },
+  {
+    "timestamp": 1764019799,
+    "value": 0.0,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764019799
+  },
+  {
+    "timestamp": 1764021599,
+    "value": 0.0,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764021599
+  },
+  {
+    "timestamp": 1764023399,
+    "value": 0.0,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764023399
+  },
+  {
+    "timestamp": 1764025199,
+    "value": 0.0,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764025199
+  },
+  {
+    "timestamp": 1764026999,
+    "value": 0.0,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764026999
+  },
+  {
+    "timestamp": 1764028799,
+    "value": 0.0,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764028799
+  },
+  {
+    "timestamp": 1764030599,
+    "value": 0.0,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764030599
+  },
+  {
+    "timestamp": 1764032399,
+    "value": 0.0,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764032399
+  },
+  {
+    "timestamp": 1764034199,
+    "value": 0.0,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764034199
+  },
+  {
+    "timestamp": 1764035999,
+    "value": 5.2,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764035999
+  },
+  {
+    "timestamp": 1764037799,
+    "value": 64.9,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764037799
+  },
+  {
+    "timestamp": 1764039599,
+    "value": 262.0,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764039599
+  },
+  {
+    "timestamp": 1764041399,
+    "value": 639.2,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764041399
+  },
+  {
+    "timestamp": 1764043199,
+    "value": 1220.6,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764043199
+  },
+  {
+    "timestamp": 1764044999,
+    "value": 1968.3,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764044999
+  },
+  {
+    "timestamp": 1764046799,
+    "value": 2858.6,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764046799
+  },
+  {
+    "timestamp": 1764048599,
+    "value": 3856.8,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764048599
+  },
+  {
+    "timestamp": 1764050399,
+    "value": 4627.7,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764050399
+  },
+  {
+    "timestamp": 1764052199,
+    "value": 5754.6,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764052199
+  },
+  {
+    "timestamp": 1764053999,
+    "value": 6911.1,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764053999
+  },
+  {
+    "timestamp": 1764055799,
+    "value": 8066.3,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764055799
+  },
+  {
+    "timestamp": 1764057599,
+    "value": 9193.9,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764057599
+  },
+  {
+    "timestamp": 1764059399,
+    "value": 10257.3,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764059399
+  },
+  {
+    "timestamp": 1764061199,
+    "value": 11249.3,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764061199
+  },
+  {
+    "timestamp": 1764062999,
+    "value": 12128.5,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764062999
+  },
+  {
+    "timestamp": 1764064799,
+    "value": 12875.1,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764064799
+  },
+  {
+    "timestamp": 1764066599,
+    "value": 13449.0,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764066599
+  },
+  {
+    "timestamp": 1764068399,
+    "value": 13858.1,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764068399
+  },
+  {
+    "timestamp": 1764070199,
+    "value": 14081.3,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764070199
+  },
+  {
+    "timestamp": 1764071999,
+    "value": 14159.9,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764071999
+  },
+  {
+    "timestamp": 1764073799,
+    "value": 14170.9,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764073799
+  },
+  {
+    "timestamp": 1764075599,
+    "value": 14171.0,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764075599
+  },
+  {
+    "timestamp": 1764077399,
+    "value": 14171.0,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764077399
+  },
+  {
+    "timestamp": 1764079199,
+    "value": 14171.0,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764079199
+  },
+  {
+    "timestamp": 1764080999,
+    "value": 14171.0,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764080999
+  },
+  {
+    "timestamp": 1764082799,
+    "value": 14171.0,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764082799
+  },
+  {
+    "timestamp": 1764084599,
+    "value": 14171.0,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764084599
+  },
+  {
+    "timestamp": 1764086399,
+    "value": 14171.0,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764086399
+  },
+  {
+    "timestamp": 1764088199,
+    "value": 14171.0,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764088199
+  },
+  {
+    "timestamp": 1764089999,
+    "value": 14171.0,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764089999
+  },
+  {
+    "timestamp": 1764091799,
+    "value": 14171.0,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764091799
+  },
+  {
+    "timestamp": 1764093599,
+    "value": 14171.0,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764093599
+  },
+  {
+    "timestamp": 1764095399,
+    "value": 14171.0,
+    "parameter_name": "Daily Energy",
+    "unit_of_measure": "kWh",
+    "latest_timestamp": 1764095399
+  }
+]
