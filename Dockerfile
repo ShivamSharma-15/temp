@@ -6,7 +6,7 @@ COPY package*.json ./
 RUN npm ci
 
 COPY . .
-RUN npm run build
+RUN rm -rf dist && npm run build
 
 FROM nginx:1.27-alpine AS serve
 WORKDIR /usr/share/nginx/html
@@ -22,10 +22,9 @@ server {
   server_name _;
 
   root /usr/share/nginx/html;
-  index index.html;
-
+  # Route all SPA requests through the built app so deep links work
   location / {
-    try_files $uri $uri/ /index.html;
+    try_files $uri $uri/ /apps/solar-smart/index.html;
   }
 }
 NGINX_CONF
