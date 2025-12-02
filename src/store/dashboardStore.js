@@ -9,7 +9,7 @@ import {
   HARD_MAX_DATE
 } from '../data/seed.js';
 
-const getDefaultUser = () => seedUsers[0];
+const getDefaultUser = () => seedUsers[0];j
 
 const clampDate = (value) => {
   const iso = (value ?? '').toString().slice(0, 10);

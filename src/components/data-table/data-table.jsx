@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from 'react';
 import {
   flexRender,
@@ -17,6 +19,7 @@ import {
 } from '../ui/table.jsx';
 import { DataTableToolbar } from './data-table-toolbar.jsx';
 import { DataTablePagination } from './data-table-pagination.jsx';
+import { ChevronUp, ChevronDown } from 'lucide-react';
 
 export const DataTable = ({
   columns,
@@ -61,21 +64,33 @@ export const DataTable = ({
       <DataTableToolbar table={table} searchKey={searchKey}>
         {toolbarSlot}
       </DataTableToolbar>
+
       <div className="rounded-xl border bg-card">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(header.column.columnDef.header, header.getContext())}
-                  </TableHead>
-                ))}
+                {headerGroup.headers.map((header) => {
+                  const isSorted = header.column.getIsSorted(); // 'asc', 'desc', false
+
+                  return (
+                    <TableHead
+                      key={header.id}
+                      className="cursor-pointer select-none"
+                      onClick={header.column.getToggleSortingHandler()}
+                    >
+                      <div className="flex items-center gap-1">
+                        {flexRender(header.column.columnDef.header, header.getContext())}
+                        {isSorted === 'asc' && <ChevronUp size={14} />}
+                        {isSorted === 'desc' && <ChevronDown size={14} />}
+                      </div>
+                    </TableHead>
+                  );
+                })}
               </TableRow>
             ))}
           </TableHeader>
+
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
@@ -97,6 +112,7 @@ export const DataTable = ({
           </TableBody>
         </Table>
       </div>
+
       <DataTablePagination table={table} />
     </div>
   );
