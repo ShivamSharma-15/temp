@@ -245,7 +245,7 @@ const comparisonColumns = [
         <Card>
           <CardContent className="p-6 text-center">
             <CardTitle className="text-[14px]">Site Capacity</CardTitle>
-            <p className="mt-3 font-[12px]">{siteCapacity} kWp</p>
+            <p className="mt-3 text-[14px]">{siteCapacity} kWp</p>
           </CardContent>
         </Card>
 
