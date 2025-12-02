@@ -164,11 +164,24 @@ const cufneLocal =
 
 const comparisonColumns = [
   { accessorKey: "Project", header: "Project" },
-
+  {
+    accessorKey: "SiteCapacity",
+    header: "Site Capacity (kWp)",
+    cell: ({ row }) =>
+      row.original.SiteCapacity
+        ? Number(row.original.SiteCapacity).toFixed(2)
+        : row.original.SiteCapacity,
+  },
   {
     accessorKey: "Generation",
     header: "Generation (kWh)",
     cell: ({ row }) => Number(row.original.Generation || 0).toFixed(2),
+  },
+
+    {
+    accessorKey: "NetExport",
+    header: "Net Export (KWH)",
+    cell: ({ row }) => Number(row.original.NetExport || 0).toFixed(2),
   },
 
   {
@@ -183,26 +196,12 @@ const comparisonColumns = [
     cell: ({ row }) => Number(row.original.CUFNE || 0).toFixed(2),
   },
 
-  {
-    accessorKey: "NetExport",
-    header: "Net Export (KWH)",
-    cell: ({ row }) => Number(row.original.NetExport || 0).toFixed(2),
-  },
-
     {
     accessorKey: "TL Loss",
-    header: "TL Loss",
+    header: "TL Losses (%)",
     cell: ({ row }) => Number(row.original.TLL || 0).toFixed(2),
   },
 
-  {
-    accessorKey: "SiteCapacity",
-    header: "Site Capacity (kWp)",
-    cell: ({ row }) =>
-      row.original.SiteCapacity
-        ? Number(row.original.SiteCapacity).toFixed(2)
-        : row.original.SiteCapacity,
-  },
 ];
 
 
@@ -246,7 +245,21 @@ const comparisonColumns = [
         <Card>
           <CardContent className="p-6 text-center">
             <CardTitle>Site Capacity</CardTitle>
-            <p className="mt-3">{siteCapacity} (kWp)</p>
+            <p className="mt-3">{siteCapacity} kWp</p>
+          </CardContent>
+        </Card>
+
+                <Card>
+          <CardContent className="p-6 text-center">
+            <CardTitle>Generation</CardTitle>
+            <p className="mt-3">{(totals["Total Generation"]).toFixed(2) || 0} kWh</p>
+          </CardContent>
+        </Card>
+
+                <Card>
+          <CardContent className="p-6 text-center">
+            <CardTitle>Net Export </CardTitle>
+            <p className="mt-3">{totals["Main Net Export  (KWH)"] || 0} kWh</p>
           </CardContent>
         </Card>
 
@@ -265,22 +278,8 @@ const comparisonColumns = [
 
         <Card>
           <CardContent className="p-6 text-center">
-            <CardTitle>Generation</CardTitle>
-            <p className="mt-3">{(totals["Total Generation"]).toFixed(2) || 0}</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="p-6 text-center">
-            <CardTitle>Main Net Export (KWH)</CardTitle>
-            <p className="mt-3">{totals["Main Net Export  (KWH)"] || 0}</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="p-6 text-center">
-            <CardTitle>TL Loss (%)</CardTitle>
-            <p className="mt-3">{tll}</p>
+            <CardTitle>TL Losses </CardTitle>
+            <p className="mt-3">{tll} %</p>
           </CardContent>
         </Card>
         
