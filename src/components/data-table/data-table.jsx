@@ -1,25 +1,27 @@
 "use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  useReactTable
-} from '@tanstack/react-table';
+  useReactTable,
+} from "@tanstack/react-table";
+
 import {
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
-  TableRow
-} from '../ui/table.jsx';
-import { DataTableToolbar } from './data-table-toolbar.jsx';
-import { DataTablePagination } from './data-table-pagination.jsx';
-import { ChevronUp, ChevronDown } from 'lucide-react';
+  TableRow,
+} from "../ui/table.jsx";
+
+import { DataTableToolbar } from "./data-table-toolbar.jsx";
+import { DataTablePagination } from "./data-table-pagination.jsx";
+import { ChevronUp, ChevronDown } from "lucide-react";
 
 export const DataTable = ({
   columns,
@@ -27,15 +29,21 @@ export const DataTable = ({
   searchKey,
   initialPageSize = 10,
   toolbarSlot,
-  emptyState = 'No records found.'
+  emptyState = "No records found.",
 }) => {
-  const [sorting, setSorting] = useState([]);
+  // 👉 DEFAULT SORT: Descending on 'Date' IF available
+  const hasDateColumn = columns.some((col) => col.accessorKey === "Date" || col.id === "Date");
+
+  const [sorting, setSorting] = useState(
+    hasDateColumn ? [{ id: "Date", desc: true }] : []
+  );
+
   const [columnFilters, setColumnFilters] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState({});
   const [rowSelection, setRowSelection] = useState({});
   const [pagination, setPagination] = useState({
     pageIndex: 0,
-    pageSize: initialPageSize
+    pageSize: initialPageSize,
   });
 
   const table = useReactTable({
@@ -46,7 +54,7 @@ export const DataTable = ({
       columnFilters,
       columnVisibility,
       rowSelection,
-      pagination
+      pagination,
     },
     onSortingChange: setSorting,
     onPaginationChange: setPagination,
@@ -56,7 +64,7 @@ export const DataTable = ({
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel()
+    getSortedRowModel: getSortedRowModel(),
   });
 
   return (
@@ -71,7 +79,7 @@ export const DataTable = ({
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
-                  const isSorted = header.column.getIsSorted(); // 'asc', 'desc', false
+                  const isSorted = header.column.getIsSorted(); // asc, desc, false
 
                   return (
                     <TableHead
@@ -80,9 +88,13 @@ export const DataTable = ({
                       onClick={header.column.getToggleSortingHandler()}
                     >
                       <div className="flex items-center gap-1">
-                        {flexRender(header.column.columnDef.header, header.getContext())}
-                        {isSorted === 'asc' && <ChevronUp size={14} />}
-                        {isSorted === 'desc' && <ChevronDown size={14} />}
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+
+                        {isSorted === "asc" && <ChevronUp size={14} />}
+                        {isSorted === "desc" && <ChevronDown size={14} />}
                       </div>
                     </TableHead>
                   );
@@ -94,17 +106,26 @@ export const DataTable = ({
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} data-state={row.getIsSelected() ? 'selected' : undefined}>
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() ? "selected" : undefined}
+                >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
                     </TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center text-muted-foreground">
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center text-muted-foreground"
+                >
                   {emptyState}
                 </TableCell>
               </TableRow>
