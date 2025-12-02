@@ -187,19 +187,19 @@ const comparisonColumns = [
   {
     accessorKey: "CUF",
     header: "CUF (Generation) (%)",
-    cell: ({ row }) => Number(row.original.CUF || 0).toFixed(2),
+    cell: ({ row }) => `${Number(row.original.CUF || 0).toFixed(2)} %`,
   },
 
     {
     accessorKey: "CUF Export",
     header: "CUF (Export) (%)",
-    cell: ({ row }) => Number(row.original.CUFNE || 0).toFixed(2),
+    cell: ({ row }) => `${Number(row.original.CUFNE || 0).toFixed(2)} %`,
   },
 
     {
     accessorKey: "TL Loss",
     header: "TL Losses (%)",
-    cell: ({ row }) => Number(row.original.TLL || 0).toFixed(2),
+    cell: ({ row }) => `${Number(row.original.TLL || 0).toFixed(2)} %`,
   },
 
 ];
@@ -244,42 +244,42 @@ const comparisonColumns = [
       <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4">
         <Card>
           <CardContent className="p-6 text-center">
-            <CardTitle>Site Capacity</CardTitle>
-            <p className="mt-3">{siteCapacity} kWp</p>
+            <CardTitle className="text-[14px]">Site Capacity</CardTitle>
+            <p className="mt-3 font-[12px]">{siteCapacity} kWp</p>
           </CardContent>
         </Card>
 
                 <Card>
           <CardContent className="p-6 text-center">
-            <CardTitle>Generation</CardTitle>
-            <p className="mt-3">{(totals["Total Generation"]).toFixed(2) || 0} kWh</p>
+            <CardTitle className="text-[14px]">Generation</CardTitle>
+            <p className="mt-3 text-[14px]">{(totals["Total Generation"]).toFixed(2) || 0} kWh</p>
           </CardContent>
         </Card>
 
                 <Card>
           <CardContent className="p-6 text-center">
-            <CardTitle>Net Export </CardTitle>
-            <p className="mt-3">{totals["Main Net Export  (KWH)"] || 0} kWh</p>
+            <CardTitle className="text-[14px]">Net Export </CardTitle>
+            <p className="mt-3 text-[14px]">{totals["Main Net Export  (KWH)"] || 0} kWh</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardContent className="p-6 text-center">
-            <CardTitle>CUF (Generation)</CardTitle>
-            <p className="mt-3">{cuf} %</p>
+            <CardTitle className="text-[14px]">CUF (Generation)</CardTitle>
+            <p className="mt-3 text-[14px]">{cuf} %</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-6 text-center">
-            <CardTitle>CUF (Export)</CardTitle>
-            <p className="mt-3">{cufne} %</p>
+            <CardTitle className="text-[14px]">CUF (Export)</CardTitle>
+            <p className="mt-3 text-[14px]">{cufne} %</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardContent className="p-6 text-center">
-            <CardTitle>TL Losses </CardTitle>
-            <p className="mt-3">{tll} %</p>
+            <CardTitle className="text-[14px]">TL Losses </CardTitle>
+            <p className="mt-3 text-[14px]">{tll} %</p>
           </CardContent>
         </Card>
         
