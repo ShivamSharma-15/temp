@@ -191,8 +191,8 @@ const comparisonColumns = [
   },
 
     {
-    accessorKey: "CUF Net Export",
-    header: "CUF (Net Export) (%)",
+    accessorKey: "CUF Export",
+    header: "CUF (Export) (%)",
     cell: ({ row }) => Number(row.original.CUFNE || 0).toFixed(2),
   },
 
@@ -241,7 +241,7 @@ const comparisonColumns = [
       </div>
 
       {/* Cards */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4">
         <Card>
           <CardContent className="p-6 text-center">
             <CardTitle>Site Capacity</CardTitle>
@@ -271,7 +271,7 @@ const comparisonColumns = [
         </Card>
         <Card>
           <CardContent className="p-6 text-center">
-            <CardTitle>CUF (Net Export)</CardTitle>
+            <CardTitle>CUF (Export)</CardTitle>
             <p className="mt-3">{cufne} %</p>
           </CardContent>
         </Card>
