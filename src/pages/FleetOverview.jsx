@@ -28,6 +28,7 @@ import {
   CardTitle,
 } from "../components/ui/card.jsx";
 import { DataTable } from "../components/data-table/data-table.jsx";
+import HomeDataTable from "../components/HomeDataTable.jsx";
 
 const energyColumns = [
   {
@@ -439,7 +440,8 @@ const FleetOverview = () => {
   }, [aggregatedCards, aggregatedLastDaySeries, totalCapacityKw]);
 
   return (
-    <div className="space-y-6">
+    <>
+    <div className="space-y-6 hidden">
       <section className="space-y-2">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <p className="text-sm font-semibold text-slate-800">Fleet snapshot</p>
@@ -655,6 +657,8 @@ const FleetOverview = () => {
         </Card>
       </section>
     </div>
+    <HomeDataTable />   
+    </>
   );
 };
 

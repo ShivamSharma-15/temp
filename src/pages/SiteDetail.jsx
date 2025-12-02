@@ -437,7 +437,7 @@ const SiteDetail = () => {
       },
       {
         key: "Daily Energy (kWh)",
-        label: "Daily Energy",
+        label: "Generation",
         suffix: " kWh",
         precision: 1,
         icon: Zap,
@@ -445,27 +445,27 @@ const SiteDetail = () => {
           lastDayChartSeries.at(-1)?.energyKwh ??
           (site.energySeries.at(-1)?.energyMWh ?? 0) * 1000,
       },
-      {
-        key: "Net Export (kWh)",
-        label: "Net Export",
-        suffix: " kWh",
-        precision: 1,
-        icon: ArrowUpCircle,
-      },
-      {
-        key: "Net Import (kWh)",
-        label: "Net Import",
-        suffix: " kWh",
-        precision: 1,
-        icon: ArrowDownCircle,
-      },
-      {
-        key: "Specific Yield (kWh/kWp)",
-        label: "Specific Yield",
-        suffix: " kWh/kWp",
-        precision: 2,
-        icon: Leaf,
-      },
+      // {
+      //   key: "Net Export (kWh)",
+      //   label: "Net Export",
+      //   suffix: " kWh",
+      //   precision: 1,
+      //   icon: ArrowUpCircle,
+      // },
+      // {
+      //   key: "Net Import (kWh)",
+      //   label: "Net Import",
+      //   suffix: " kWh",
+      //   precision: 1,
+      //   icon: ArrowDownCircle,
+      // },
+      // {
+      //   key: "Specific Yield (kWh/kWp)",
+      //   label: "Specific Yield",
+      //   suffix: " kWh/kWp",
+      //   precision: 2,
+      //   icon: Leaf,
+      // },
       {
         key: "CUF (%)",
         label: "CUF (%)",
@@ -616,7 +616,7 @@ const SiteDetail = () => {
               {site.technology.join(" / ")}
             </p>
           </div>
-          <Badge
+          <Badge className="hidden"
             variant={
               site.status === "Online"
                 ? "success"
@@ -641,7 +641,7 @@ const SiteDetail = () => {
             </p>
           )}
         </div>
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+        <div className="grid gap-4 md:grid-cols-3 xl:grid-cols-3">
           {dailyCards.map((card) => (
             <StatCard
               key={card.label}

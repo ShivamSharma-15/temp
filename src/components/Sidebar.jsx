@@ -102,7 +102,7 @@ const Sidebar = () => {
                 <div className="font-medium">{site.name}</div>
                 <div className="text-xs text-muted-foreground">{site.location}</div>
               </div>
-              <Badge variant={statusVariants[site.status] ?? 'secondary'}>{site.status}</Badge>
+              <Badge className="hidden" variant={statusVariants[site.status] ?? 'secondary'}>{site.status}</Badge>
             </NavLink>
           ))}
           {accessibleSites.length === 0 && (

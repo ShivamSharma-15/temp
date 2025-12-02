@@ -5,6 +5,7 @@ import { useDashboardStore } from '../store/dashboardStore.js';
 import DateRangeSelector from './DateRangeSelector.jsx';
 import { Avatar, AvatarFallback } from './ui/avatar.jsx';
 import { Button } from './ui/button.jsx';
+import { useLocation } from 'react-router-dom';
 import {
   Select,
   SelectContent,
@@ -58,6 +59,10 @@ const TopBar = () => {
     }
   };
 
+  
+  const location = useLocation();
+  const showDateRange = location.pathname !== '/app'
+
   return (
     <header className="sticky top-0 z-20 border-b border-slate-200/80 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/70">
       <div className="flex flex-col gap-4 px-4 py-4 sm:px-6 lg:px-10">
@@ -70,7 +75,7 @@ const TopBar = () => {
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-3">
-            <DateRangeSelector />
+            {showDateRange &&  <DateRangeSelector /> }
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/80 bg-white/70 px-3 py-2 shadow-sm">
               <Avatar className="h-10 w-10 border border-slate-200">
                 <AvatarFallback>{initials}</AvatarFallback>
