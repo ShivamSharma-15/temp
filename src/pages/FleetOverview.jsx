@@ -29,6 +29,7 @@ import {
 } from "../components/ui/card.jsx";
 import { DataTable } from "../components/data-table/data-table.jsx";
 import HomeDataTable from "../components/HomeDataTable.jsx";
+import TotalDataTable from "../components/TotalDataTable.jsx";
 
 const energyColumns = [
   {
@@ -657,7 +658,8 @@ const FleetOverview = () => {
         </Card>
       </section>
     </div>
-    <HomeDataTable />   
+    {/* <HomeDataTable />    */}
+    <TotalDataTable />
     </>
   );
 };
