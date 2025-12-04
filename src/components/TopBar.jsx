@@ -15,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue
 } from './ui/select.jsx';
+import HeaderDatePicker from './HeaderDatePicker.jsx';
 
 const navRoutes = [
   { label: 'Fleet', to: '/app', exact: true },
@@ -75,7 +76,7 @@ const TopBar = () => {
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-3">
-            {showDateRange &&  <DateRangeSelector /> }
+            {showDateRange && <>  <DateRangeSelector /> 
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/80 bg-white/70 px-3 py-2 shadow-sm">
               <Avatar className="h-10 w-10 border border-slate-200">
                 <AvatarFallback>{initials}</AvatarFallback>
@@ -87,10 +88,13 @@ const TopBar = () => {
               <Button variant="ghost" size="sm" onClick={logout}>
                 Switch persona
               </Button>
-            </div>
+            </div></>
+}
+
+{!showDateRange && <HeaderDatePicker/>}
           </div>
         </div>
-
+{showDateRange && 
         <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
           <nav className="flex flex-wrap gap-2 lg:gap-3">
             <div className="flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/70 px-3 py-2 text-xs font-semibold uppercase text-muted-foreground lg:hidden">
@@ -137,6 +141,7 @@ const TopBar = () => {
             </div>
           )}
         </div>
+}
       </div>
     </header>
   );

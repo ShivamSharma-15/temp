@@ -1,6 +1,8 @@
 import { create } from "zustand";
 import { format } from "date-fns";
 
+const base_url = import.meta.env.VITE_API_URL;
+
 export const useFleetOverviewStore = create((set) => ({
   loading: false,
   error: null,
@@ -26,9 +28,7 @@ export const useFleetOverviewStore = create((set) => ({
       );
 
       const res = await fetch(
-        `${
-          import.meta.env.VITE_API_URL
-        }/api/integrate/overview-data/v1?from=${formattedFrom}&to=${formattedTo}`
+        `${base_url}/api/integrate/overview-data/v1?from=${formattedFrom}&to=${formattedTo}`
       );
 
       const json = await res.json();
@@ -39,4 +39,11 @@ export const useFleetOverviewStore = create((set) => ({
       set({ error: err.message, loading: false });
     }
   },
+
+  initializeDefaultRange: () => {
+  const d = new Date();
+  d.setDate(d.getDate() - 1);
+  d.setHours(0,0,0,0);
+  set({ range: { from: d, to: d } });
+},
 }));

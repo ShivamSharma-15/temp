@@ -125,17 +125,17 @@ const columns = [
   {
     accessorKey: "cufGen",
     header: "CUF Gen (%)",
-    cell: (info) => info.getValue() ?? "-",
+    cell: (info) => info.getValue() ? `${info.getValue()} %` : "-",
   },
   {
     accessorKey: "cufExport",
     header: "CUF Export (%)",
-    cell: (info) => info.getValue() ?? "-",
+    cell: (info) => info.getValue() ? `${info.getValue()} %` : "-",
   },
   {
     accessorKey: "tlLoss",
     header: "TL Loss (%)",
-    cell: (info) => info.getValue() ?? "-",
+    cell: (info) => info.getValue() ? `${info.getValue()} %` : "-",
   },
 ];
 
@@ -146,7 +146,7 @@ const columns = [
     <div className="space-y-10">
 
       {/* Date Picker */}
-      <Popover>
+      {/* <Popover>
         <PopoverTrigger asChild>
           <Button variant="outline" className="flex items-center gap-2">
             <CalendarIcon size={16} />
@@ -158,7 +158,7 @@ const columns = [
         <PopoverContent className="p-0 bg-white">
           <Calendar mode="range" selected={range} onSelect={handleRangeChange}  disabled={(date) => date > new Date(new Date().setDate(new Date().getDate() - 1))} />
         </PopoverContent>
-      </Popover>
+      </Popover> */}
 
       {/* Cards */}
       <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4">
