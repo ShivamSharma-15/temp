@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { format } from "date-fns";
 
-const base_url = import.meta.env.VITE_API_URL;
+const base_url = "https://ai.nds.studio/apps/solar-background";
 
 export const useFleetOverviewStore = create((set) => ({
   loading: false,

@@ -164,32 +164,32 @@ const columns = [
       <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4 -mb-6">
         <Card className="transition-all duration-300 hover:shadow-lg hover:scale-[1.02] cursor-pointer"><CardContent className="p-3 text-center">
           <CardTitle className="text-[14px]">Total Capacity</CardTitle>
-          <p className="mt-3 text-[14px]">{(formattedTotals.siteCapacity.toFixed(2))} kWp</p>
+          <p className="mt-1 text-[14px]">{(formattedTotals.siteCapacity.toFixed(2))} kWp</p>
         </CardContent></Card>
 
         <Card className="transition-all duration-300 hover:shadow-lg hover:scale-[1.02] cursor-pointer"><CardContent className="p-3 text-center">
           <CardTitle className="text-[14px]">Generation</CardTitle>
-          <p className="mt-3 text-[14px]">{formattedTotals.generation.toFixed(2)} kWh</p>
+          <p className="mt-1 text-[14px]">{formattedTotals.generation.toFixed(2)} kWh</p>
         </CardContent></Card>
 
         <Card className="transition-all duration-300 hover:shadow-lg hover:scale-[1.02] cursor-pointer"><CardContent className="p-3 text-center">
           <CardTitle className="text-[14px]">Net Export</CardTitle>
-          <p className="mt-3 text-[14px]">{formattedTotals.netExport.toFixed(2)} kWh</p>
+          <p className="mt-1 text-[14px]">{formattedTotals.netExport.toFixed(2)} kWh</p>
         </CardContent></Card>
 
         <Card className="transition-all duration-300 hover:shadow-lg hover:scale-[1.02] cursor-pointer"><CardContent className="p-3 text-center">
           <CardTitle className="text-[14px]">CUF (Gen)</CardTitle>
-          <p className="mt-3 text-[14px]">{formattedTotals.cufGen}%</p>
+          <p className="mt-1 text-[14px]">{formattedTotals.cufGen}%</p>
         </CardContent></Card>
 
         <Card className="transition-all duration-300 hover:shadow-lg hover:scale-[1.02] cursor-pointer"><CardContent className="p-3 text-center">
           <CardTitle className="text-[14px]">CUF (Export)</CardTitle>
-          <p className="mt-3 text-[14px]">{formattedTotals.cufExport}%</p>
+          <p className="mt-1 text-[14px]">{formattedTotals.cufExport}%</p>
         </CardContent></Card>
 
         <Card className="transition-all duration-300 hover:shadow-lg hover:scale-[1.02] cursor-pointer"><CardContent className="p-3 text-center">
           <CardTitle className="text-[14px]">TL Loss</CardTitle>
-          <p className="mt-3 text-[14px]">{formattedTotals.tlLoss}%</p>
+          <p className="mt-1 text-[14px]">{formattedTotals.tlLoss}%</p>
         </CardContent></Card>
       </div>
 
