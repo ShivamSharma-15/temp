@@ -18,6 +18,50 @@ const navItems = [
   { label: 'Access control', to: '/app/access', icon: Shield, roles: ['owner', 'admin'] }
 ];
 
+const siteNavItems = [
+  { 
+    label: "Abhaneri", 
+    to: "#abhaneri",
+    location: "Lat 26.9862, Lon 76.6073"
+  },
+  // { 
+  //   label: "Asadi", 
+  //   to: "#asadi",
+  //   location: "Lat 15.2411, Lon 74.7753"
+  // },
+  { 
+    label: "Gullana", 
+    to: "#gullana",
+    location: "Lat 24.7128, Lon 75.0024"
+  },
+  { 
+    label: "Indora", 
+    to: "#indora",
+    location: "Lat 32.1672, Lon 75.5639"
+  },
+  // { 
+  //   label: "JOD01", 
+  //   to: "#jod01",
+  //   location: "Lat 26.2389, Lon 73.0243"
+  // },
+  { 
+    label: "Kerli Nada", 
+    to: "#kerli-nada",
+    location: "Lat 20.2145, Lon 73.0051"
+  },
+  { 
+    label: "Meenapada", 
+    to: "#meenapada",
+    location: "Lat 20.4527, Lon 74.1283"
+  },
+  { 
+    label: "Khorandi", 
+    to: "#khorandi",
+    location: "Lat 24.9274, Lon 70.1925"
+  },
+];
+
+
 const statusVariants = {
   Online: 'success',
   Healthy: 'success',
@@ -52,6 +96,9 @@ const Sidebar = () => {
     return sites
       .filter((site) => user.accessibleSiteIds.includes(site.id));
   }, [sites, user]);
+
+  console.log("accessibleSites",accessibleSites);
+  
 
   if (!user) return null;
 
@@ -103,6 +150,21 @@ const Sidebar = () => {
                 <div className="text-xs text-muted-foreground">{site.location}</div>
               </div>
               <Badge className="hidden" variant={statusVariants[site.status] ?? 'secondary'}>{site.status}</Badge>
+            </NavLink>
+          ))}
+
+          {siteNavItems.map((site) => (
+            <NavLink
+              key={site.to}
+              to={site.to}
+              className=
+                  'flex items-center justify-between rounded-xl border border-transparent px-3 py-2 text-sm transition hover:border-slate-200 hover:bg-white'
+            >
+              <div>
+                <div className="font-medium">{site.label}</div>
+                <div className="text-xs text-muted-foreground">{site.location}</div>
+              </div>
+              {/* <Badge className="hidden" variant={statusVariants[site.status] ?? 'secondary'}>{site.status}</Badge> */}
             </NavLink>
           ))}
           {accessibleSites.length === 0 && (
