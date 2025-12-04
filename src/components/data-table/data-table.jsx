@@ -111,12 +111,13 @@ export const DataTable = ({
                   data-state={row.getIsSelected() ? "selected" : undefined}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
+<TableCell key={cell.id}>
+  {(() => {
+    const rendered = flexRender(cell.column.columnDef.cell, cell.getContext());
+    return rendered ?? "-"; // fallback if null/undefined
+  })()}
+</TableCell>
+
                   ))}
                 </TableRow>
               ))

@@ -4,32 +4,7 @@ import { format } from "date-fns";
 export const useFleetOverviewStore = create((set) => ({
   loading: false,
   error: null,
-  data: [
-    {
-      site_id: "id123",
-      site_data: {
-        name: "Site A",
-        site_capacity: 5375,
-        generation: 14676.3,
-        netExport: 1200,
-        cufGen: 12,
-        cufExport: 11,
-        tlLoss: 9,
-      },
-    },
-    {
-      site_id: "id124",
-      site_data: {
-        name: "Site B",
-        site_capacity: 3000,
-        generation: 9940,
-        netExport: 680,
-        cufGen: 10,
-        cufExport: 9,
-        tlLoss: 8,
-      },
-    },
-  ],
+  data: [],
 
   // Default Range - Filled later by component
   range: { from: null, to: null },

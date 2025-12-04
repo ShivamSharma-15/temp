@@ -25,8 +25,9 @@ export default function FleetOverview() {
 
   useEffect(() => {
   if (!range || !range.from || !range.to) {
-    const d = new Date();
-    d.setDate(d.getDate() - 1); // yesterday
+const d = new Date();
+d.setDate(d.getDate() - 1);        // go to yesterday
+d.setHours(0, 0, 0, 0);
 
     setRange({ from: d, to: d });
     fetchFleetData(d, d);
@@ -100,15 +101,44 @@ const formattedTotals = {
   // ----------------------
   // Table Columns
   // ----------------------
-  const columns = [
-    { accessorKey: "name", header: "Project" },
-    { accessorKey: "site_capacity", header: "Capacity (kWp)" },
-    { accessorKey: "generation", header: "Generation (kWh)" },
-    { accessorKey: "netExport", header: "Net Export (kWh)" },
-    { accessorKey: "cufGen", header: "CUF Gen (%)" },
-    { accessorKey: "cufExport", header: "CUF Export (%)" },
-    { accessorKey: "tlLoss", header: "TL Loss (%)" },
-  ];
+const columns = [
+  {
+    accessorKey: "name",
+    header: "Project",
+    cell: (info) => info.getValue() ?? "-", // fallback
+  },
+  {
+    accessorKey: "site_capacity",
+    header: "Capacity (kWp)",
+    cell: (info) => info.getValue() ?? "-",
+  },
+  {
+    accessorKey: "generation",
+    header: "Generation (kWh)",
+    cell: (info) => info.getValue() ?? "-",
+  },
+  {
+    accessorKey: "netExport",
+    header: "Net Export (kWh)",
+    cell: (info) => info.getValue() ?? "-",
+  },
+  {
+    accessorKey: "cufGen",
+    header: "CUF Gen (%)",
+    cell: (info) => info.getValue() ?? "-",
+  },
+  {
+    accessorKey: "cufExport",
+    header: "CUF Export (%)",
+    cell: (info) => info.getValue() ?? "-",
+  },
+  {
+    accessorKey: "tlLoss",
+    header: "TL Loss (%)",
+    cell: (info) => info.getValue() ?? "-",
+  },
+];
+
 
   const tableRows = data.map((item) => item.site_data);
 
@@ -126,7 +156,7 @@ const formattedTotals = {
           </Button>
         </PopoverTrigger>
         <PopoverContent className="p-0 bg-white">
-          <Calendar mode="range" selected={range} onSelect={handleRangeChange} />
+          <Calendar mode="range" selected={range} onSelect={handleRangeChange}  disabled={(date) => date > new Date(new Date().setDate(new Date().getDate() - 1))} />
         </PopoverContent>
       </Popover>
 
