@@ -49,7 +49,7 @@ export const useFleetOverviewStore = create((set) => ({
 
 
       const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/overview-data/v1?from=${formattedFrom}&to=${formattedTo}`
+        `/api/fleet-overview?from=${formattedFrom}&to=${formattedTo}`
       );
 
       const json = await res.json();

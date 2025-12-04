@@ -62,9 +62,9 @@ export default function FleetOverview() {
 const totals = data.reduce(
   (acc, item) => {
     const site = item.site_data;
-    acc.generation += site.generation || 0;
-    acc.netExport += site.netExport || 0;
-    acc.siteCapacity += site.site_capacity || 0;
+    acc.generation += Number(site.generation) || 0;
+    acc.netExport += Number(site.netExport) || 0;
+    acc.siteCapacity += Number(site.site_capacity) || 0;
     acc.totalDays += 1; // count number of sites / days
     return acc;
   },
@@ -132,32 +132,32 @@ const formattedTotals = {
 
       {/* Cards */}
       <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4">
-        <Card><CardContent className="p-6 text-center">
+        <Card className="transition-all duration-300 hover:shadow-lg hover:scale-[1.02] cursor-pointer"><CardContent className="p-6 text-center">
           <CardTitle className="text-[14px]">Total Capacity</CardTitle>
-          <p className="mt-3 text-[14px]">{formattedTotals.siteCapacity} kWp</p>
+          <p className="mt-3 text-[14px]">{(formattedTotals.siteCapacity.toFixed(2))} kWp</p>
         </CardContent></Card>
 
-        <Card><CardContent className="p-6 text-center">
+        <Card className="transition-all duration-300 hover:shadow-lg hover:scale-[1.02] cursor-pointer"><CardContent className="p-6 text-center">
           <CardTitle className="text-[14px]">Generation</CardTitle>
-          <p className="mt-3 text-[14px]">{formattedTotals.generation} kWh</p>
+          <p className="mt-3 text-[14px]">{formattedTotals.generation.toFixed(2)} kWh</p>
         </CardContent></Card>
 
-        <Card><CardContent className="p-6 text-center">
+        <Card className="transition-all duration-300 hover:shadow-lg hover:scale-[1.02] cursor-pointer"><CardContent className="p-6 text-center">
           <CardTitle className="text-[14px]">Net Export</CardTitle>
-          <p className="mt-3 text-[14px]">{formattedTotals.netExport} kWh</p>
+          <p className="mt-3 text-[14px]">{formattedTotals.netExport.toFixed(2)} kWh</p>
         </CardContent></Card>
 
-        <Card><CardContent className="p-6 text-center">
+        <Card className="transition-all duration-300 hover:shadow-lg hover:scale-[1.02] cursor-pointer"><CardContent className="p-6 text-center">
           <CardTitle className="text-[14px]">CUF (Gen)</CardTitle>
           <p className="mt-3 text-[14px]">{formattedTotals.cufGen}%</p>
         </CardContent></Card>
 
-        <Card><CardContent className="p-6 text-center">
+        <Card className="transition-all duration-300 hover:shadow-lg hover:scale-[1.02] cursor-pointer"><CardContent className="p-6 text-center">
           <CardTitle className="text-[14px]">CUF (Export)</CardTitle>
           <p className="mt-3 text-[14px]">{formattedTotals.cufExport}%</p>
         </CardContent></Card>
 
-        <Card><CardContent className="p-6 text-center">
+        <Card className="transition-all duration-300 hover:shadow-lg hover:scale-[1.02] cursor-pointer"><CardContent className="p-6 text-center">
           <CardTitle className="text-[14px]">TL Loss</CardTitle>
           <p className="mt-3 text-[14px]">{formattedTotals.tlLoss}%</p>
         </CardContent></Card>
