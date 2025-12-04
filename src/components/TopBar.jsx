@@ -69,7 +69,7 @@ const TopBar = () => {
       <div className="flex flex-col gap-4 px-4 py-4 sm:px-6 lg:px-10">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div className="space-y-1">
-            <p className="text-xs font-semibold uppercase tracking-wide text-primary">Solar Fleet</p>
+            {/* <p className="text-xs font-semibold uppercase tracking-wide text-primary">Solar Fleet</p> */}
             <div className="flex items-center gap-2 text-lg font-semibold text-slate-900">
               <CalendarRange className="h-4 w-4 text-primary" />
               Monitoring insights & live health
@@ -95,7 +95,7 @@ const TopBar = () => {
           </div>
         </div>
 {showDateRange && 
-        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex flex-col gap-3 md:flex-row lg:items-center md:justify-between">
           <nav className="flex flex-wrap gap-2 lg:gap-3">
             <div className="flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/70 px-3 py-2 text-xs font-semibold uppercase text-muted-foreground lg:hidden">
               <LayoutPanelLeft className="h-3.5 w-3.5" />
