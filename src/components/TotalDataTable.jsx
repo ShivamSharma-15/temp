@@ -95,7 +95,7 @@ const totals = data.reduce(
     acc.generation += Number(site.generation) || 0;
     acc.netExport += Number(site.netExport) || 0;
     acc.siteCapacity += Number(site.site_capacity) || 0;
-    acc.totalDays += 1; // count number of sites / days
+    acc.totalDays = range && Math.floor((new Date(range.to) - new Date(range.from)) / (1000 * 60 * 60 * 24)) + 1;; // count number of sites / days
     return acc;
   },
   {
@@ -110,6 +110,9 @@ const totals = data.reduce(
 const cufGen = totals.totalDays
   ? ((totals.generation / (totals.siteCapacity * 24 * totals.totalDays)) * 100)
   : 0;
+
+  console.log(totals);
+  
 
 const cufExport = totals.totalDays
   ? ((totals.netExport / (totals.siteCapacity * 24 * totals.totalDays)) * 100)
