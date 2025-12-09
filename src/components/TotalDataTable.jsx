@@ -1,15 +1,24 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { format, parse, isSameDay } from "date-fns";
 
 import { Button } from "../components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "../components/ui/popover";
 import { Calendar } from "../components/ui/calendar";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, File } from "lucide-react";
 
 import { Card, CardContent, CardTitle } from "./ui/card.jsx";
 import { DataTable } from "../components/data-table/data-table.jsx";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog.jsx";
 
 import { useFleetOverviewStore } from "../store/useFleetOverviewStore";
 
@@ -55,6 +64,26 @@ d.setHours(0, 0, 0, 0);
       fetchFleetData(value.from, value.to);
     }
   };
+
+  const [modalData, setModalData] = useState(null);
+const [open, setOpen] = useState(false);
+
+const openModal = (payload) => {
+  setModalData(payload);
+  setOpen(true);
+};
+
+  const siteMessages = {
+  Abhaneri: "1 Inverter not connected",
+
+  Asadi: `1 Inverter not connected
+Meter not connected`,
+
+  Meenapada: "1 Inverter not connected",
+
+  Khorandi: "Meter not connected",
+};
+
 
   // ----------------------
   // SUM for Cards
@@ -137,6 +166,30 @@ const columns = [
     header: "TL Loss (%)",
     cell: (info) => info.getValue() ? `${info.getValue()} %` : "-",
   },
+{
+  accessorKey: "action",
+  header: "",
+  cell: ({ row }) => {
+    const siteName = row.original.name; // adjust to your field
+    const message = siteMessages[siteName];
+
+    return (
+      <button
+        onClick={() => {
+          if (message) {
+           openModal({ siteName, message });
+          }
+        }}
+        className={`text-xs`}
+        disabled={!message}
+      >
+        {message ? <File size={16} color="red" /> : "-"}
+      </button>
+    );
+  },
+}
+
+
 ];
 
 
@@ -195,6 +248,19 @@ const columns = [
 
       {/* Table */}
       <DataTable columns={columns} data={tableRows} searchKey="name" />
+
+      <Dialog open={open} onOpenChange={setOpen}>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>{modalData?.siteName} - Status</DialogTitle>
+    </DialogHeader>
+
+    <pre className="whitespace-pre-wrap text-sm">
+      {modalData?.message}
+    </pre>
+  </DialogContent>
+</Dialog>
+
     </div>
   );
 }
