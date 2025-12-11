@@ -30,13 +30,33 @@ export const DataTable = ({
   initialPageSize = 10,
   toolbarSlot,
   emptyState = "No records found.",
+  defaultSort = null, // ← NEW PROP
 }) => {
   // 👉 DEFAULT SORT: Descending on 'Date' IF available
   const hasDateColumn = columns.some((col) => col.accessorKey === "Date" || col.id === "Date");
 
-  const [sorting, setSorting] = useState(
-    hasDateColumn ? [{ id: "Date", desc: true }] : []
+const [sorting, setSorting] = useState(() => {
+  if (defaultSort) {
+    return [
+      {
+        id: defaultSort.id,
+        desc: defaultSort.desc ?? false,
+      },
+    ];
+  }
+
+  // automatic: if a Date column exists, sort by Date DESC
+  const dateColumn = columns.find(
+    (c) =>
+      ["date", "created_at", "createdAt"].includes(
+        (c.accessorKey || c.id)?.toLowerCase()
+      )
   );
+
+  return dateColumn
+    ? [{ id: dateColumn.accessorKey || dateColumn.id, desc: true }]
+    : [];
+});
 
   const [columnFilters, setColumnFilters] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState({});

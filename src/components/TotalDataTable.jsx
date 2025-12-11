@@ -134,6 +134,17 @@ const formattedTotals = {
   // Table Columns
   // ----------------------
 const columns = [
+{
+  id: "serial",
+  header: "#",
+  enableSorting: false,
+  cell: ({ row, table }) => {
+    // Compute the current row's position in the displayed rows
+    const visibleRows = table.getRowModel().rows;
+    const rowIndex = visibleRows.findIndex(r => r.id === row.id);
+    return rowIndex + 1; // 1-based numbering
+  },
+},
   {
     accessorKey: "name",
     header: "Project",
@@ -250,8 +261,12 @@ const columns = [
       </div>
 
       {/* Table */}
-      <DataTable columns={columns} data={tableRows} searchKey="name" />
-
+<DataTable
+  columns={columns}
+  data={tableRows}
+  searchKey="name"
+  defaultSort={{ id: "name", desc: false }}
+/>
       <Dialog open={open} onOpenChange={setOpen}>
   <DialogContent>
     <DialogHeader>
